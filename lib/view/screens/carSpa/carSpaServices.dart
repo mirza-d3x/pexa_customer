@@ -99,15 +99,15 @@ class _CarSpaServicesState extends State<CarSpaServices> {
                                         height: 50,
                                         decoration: BoxDecoration(
                                             border: Border.all(
-                                              color: Colors.grey.withOpacity(0.1),
-                                              width: 0.5,
-                                            )),
+                                          color: Colors.grey.withOpacity(0.1),
+                                          width: 0.5,
+                                        )),
                                         child: Padding(
                                           padding: const EdgeInsets.only(
                                               left: 10, right: 10),
                                           child: Row(
                                             mainAxisAlignment:
-                                            MainAxisAlignment.start,
+                                                MainAxisAlignment.start,
                                             children: [
                                               Expanded(
                                                 flex: 40,
@@ -120,10 +120,9 @@ class _CarSpaServicesState extends State<CarSpaServices> {
                                                         RouteHelper
                                                             .locationSearch,
                                                         arguments: {
-                                                          'page': Get
-                                                              .currentRoute,
-                                                          'isForAddress':
-                                                          false
+                                                          'page':
+                                                              Get.currentRoute,
+                                                          'isForAddress': false
                                                         });
                                                   },
                                                   child: Container(
@@ -134,53 +133,57 @@ class _CarSpaServicesState extends State<CarSpaServices> {
                                                           size: 18,
                                                           color: Colors.black,
                                                         ),
-                                                        const SizedBox(width: 5),
+                                                        const SizedBox(
+                                                            width: 5),
                                                         Expanded(
                                                             child: Row(
-                                                              children: [
-                                                                Expanded(
-                                                                  child: GetBuilder<
+                                                          children: [
+                                                            Expanded(
+                                                              child: GetBuilder<
                                                                       locationPermissionController>(
-                                                                      builder:
-                                                                          (currentLocationController) {
-                                                                        return currentLocationController
-                                                                            .userLocationString
-                                                                            .toString()
-                                                                            .contains(
+                                                                  builder:
+                                                                      (currentLocationController) {
+                                                                return currentLocationController
+                                                                        .userLocationString
+                                                                        .toString()
+                                                                        .contains(
                                                                             ',')
-                                                                            ? Text(
-                                                                          ('${currentLocationController.userLocationString!.split(',')[0]},${currentLocationController.userLocationString!.split(',')[1]}').length > 20
-                                                                              ? '${('${currentLocationController.userLocationString!.split(',')[0]},${currentLocationController.userLocationString!.split(',')[1]}').substring(0, 19)}...'
-                                                                              : currentLocationController.userLocationString!.split(',')[0] == '' && currentLocationController.userLocationString!.split(',').isEmpty
-                                                                              ? 'Unknown Place'
-                                                                              : '${currentLocationController.userLocationString!.split(',')[0]},${currentLocationController.userLocationString!.split(',')[1]}',
-                                                                          style:
-                                                                          smallFont(Colors.black),
-                                                                          overflow:
-                                                                          TextOverflow.ellipsis,
-                                                                          maxLines:
-                                                                          1,
-                                                                        )
-                                                                            : Text(
-                                                                          currentLocationController.userLocationString.toString().length > 20
-                                                                              ? currentLocationController.userLocationString.toString().substring(0, 10)
-                                                                              : currentLocationController.userLocationString.toString(),
-                                                                          style:
-                                                                          smallFont(Colors.black),
-                                                                          overflow:
-                                                                          TextOverflow.ellipsis,
-                                                                          maxLines:
-                                                                          1,
-                                                                        );
-                                                                      }),
-                                                                ),
-                                                                const Icon(
-                                                                  Icons
-                                                                      .keyboard_arrow_down_outlined,
-                                                                  size: 20,
-                                                                )
-                                                              ],
-                                                            )),
+                                                                    ? Text(
+                                                                        ('${currentLocationController.userLocationString!.split(',')[0]},${currentLocationController.userLocationString!.split(',')[1]}').length >
+                                                                                20
+                                                                            ? '${('${currentLocationController.userLocationString!.split(',')[0]},${currentLocationController.userLocationString!.split(',')[1]}').substring(0, 19)}...'
+                                                                            : currentLocationController.userLocationString!.split(',')[0] == '' && currentLocationController.userLocationString!.split(',').isEmpty
+                                                                                ? 'Unknown Place'
+                                                                                : '${currentLocationController.userLocationString!.split(',')[0]},${currentLocationController.userLocationString!.split(',')[1]}',
+                                                                        style: smallFont(
+                                                                            Colors.black),
+                                                                        overflow:
+                                                                            TextOverflow.ellipsis,
+                                                                        maxLines:
+                                                                            1,
+                                                                      )
+                                                                    : Text(
+                                                                        currentLocationController.userLocationString.toString().length >
+                                                                                20
+                                                                            ? currentLocationController.userLocationString.toString().substring(0,
+                                                                                10)
+                                                                            : currentLocationController.userLocationString.toString(),
+                                                                        style: smallFont(
+                                                                            Colors.black),
+                                                                        overflow:
+                                                                            TextOverflow.ellipsis,
+                                                                        maxLines:
+                                                                            1,
+                                                                      );
+                                                              }),
+                                                            ),
+                                                            const Icon(
+                                                              Icons
+                                                                  .keyboard_arrow_down_outlined,
+                                                              size: 20,
+                                                            )
+                                                          ],
+                                                        )),
                                                       ],
                                                     ),
                                                   ),
@@ -192,244 +195,250 @@ class _CarSpaServicesState extends State<CarSpaServices> {
                                               GetBuilder<CarModelController>(
                                                   builder:
                                                       (carModelController) {
-                                                    return Expanded(
-                                                      flex: 60,
-                                                      child: Row(children: [
-                                                        Expanded(
-                                                          child: InkWell(
-                                                            onTap: () async {
-                                                              print(
-                                                                  'Clicked on car icon');
-                                                              //carBrandBottomSheet(context);
+                                                return Expanded(
+                                                  flex: 60,
+                                                  child: Row(children: [
+                                                    Expanded(
+                                                      child: InkWell(
+                                                        onTap: () async {
+                                                          print(
+                                                              'Clicked on car icon');
+                                                          //carBrandBottomSheet(context);
+                                                          carModelController
+                                                              .isMakeSearch
+                                                              .value = false;
+                                                          if (carModelController
+                                                                  .brandList!
+                                                                  .isNotEmpty &&
                                                               carModelController
-                                                                  .isMakeSearch
-                                                                  .value = false;
-                                                              if (carModelController
-                                                                  .brandList!.isNotEmpty &&
-                                                                  carModelController
-                                                                      .brandList!.isNotEmpty) {
-                                                                if (!Get
-                                                                    .isBottomSheetOpen!) {
-                                                                  Get.bottomSheet(
-                                                                      carBrandBottomSheet(
-                                                                          context),
-                                                                      isScrollControlled:
+                                                                  .brandList!
+                                                                  .isNotEmpty) {
+                                                            if (!Get
+                                                                .isBottomSheetOpen!) {
+                                                              Get.bottomSheet(
+                                                                  carBrandBottomSheet(
+                                                                      context),
+                                                                  isScrollControlled:
                                                                       true);
-                                                                }
-                                                              } else {
-                                                                carModelController
-                                                                    .fetchData()
-                                                                    .then(
-                                                                        (value) {
-                                                                      if (!Get
-                                                                          .isBottomSheetOpen!) {
-                                                                        Get.bottomSheet(
-                                                                            carBrandBottomSheet(
-                                                                                context),
-                                                                            isScrollControlled:
-                                                                            true);
-                                                                      }
-                                                                    });
+                                                            }
+                                                          } else {
+                                                            carModelController
+                                                                .fetchData()
+                                                                .then((value) {
+                                                              if (!Get
+                                                                  .isBottomSheetOpen!) {
+                                                                Get.bottomSheet(
+                                                                    carBrandBottomSheet(
+                                                                        context),
+                                                                    isScrollControlled:
+                                                                        true);
                                                               }
-                                                            },
-                                                            child: Row(
-                                                              crossAxisAlignment:
+                                                            });
+                                                          }
+                                                        },
+                                                        child: Row(
+                                                          crossAxisAlignment:
                                                               CrossAxisAlignment
                                                                   .end,
-                                                              mainAxisAlignment:
+                                                          mainAxisAlignment:
                                                               MainAxisAlignment
                                                                   .end,
-                                                              children: [
-                                                                Image.asset(
-                                                                  Images.car_ico,
-                                                                  width: 20,
-                                                                  color: Colors.black,
-                                                                ),
-                                                                const SizedBox(
-                                                                    width: 5),
-                                                                Flexible(
-                                                                    child: Text(
-                                                                        " ${carModelController.carBrandName}"
-                                                                            " ${carModelController.carModelName}",
-                                                                        maxLines:
-                                                                        1,
-                                                                        overflow:
+                                                          children: [
+                                                            Image.asset(
+                                                              Images.car_ico,
+                                                              width: 20,
+                                                              color:
+                                                                  Colors.black,
+                                                            ),
+                                                            const SizedBox(
+                                                                width: 5),
+                                                            Flexible(
+                                                                child: Text(
+                                                                    " ${carModelController.carBrandName}"
+                                                                    " ${carModelController.carModelName}",
+                                                                    maxLines: 1,
+                                                                    overflow:
                                                                         TextOverflow
                                                                             .ellipsis,
-                                                                        style: defaultFont(
-                                                                            size:
+                                                                    style: defaultFont(
+                                                                        size:
                                                                             12,
-                                                                            weight: FontWeight
-                                                                                .w400,
-                                                                            color:
-                                                                            Colors.black))),
-                                                              ],
-                                                            ),
-                                                          ),
+                                                                        weight: FontWeight
+                                                                            .w400,
+                                                                        color: Colors
+                                                                            .black))),
+                                                          ],
                                                         ),
-                                                        const SizedBox(
-                                                          width: 5,
-                                                        ),
-                                                        widget.showSearch
-                                                            ? widget.backgroundColor !=
-                                                            null &&
-                                                            widget.backgroundColor ==
-                                                                Colors
-                                                                    .transparent &&
-                                                            !widget.isMain
+                                                      ),
+                                                    ),
+                                                    const SizedBox(
+                                                      width: 5,
+                                                    ),
+                                                    widget.showSearch
+                                                        ? widget.backgroundColor !=
+                                                                    null &&
+                                                                widget.backgroundColor ==
+                                                                    Colors
+                                                                        .transparent &&
+                                                                !widget.isMain
                                                             ? Center(
-                                                          child:
-                                                          InkWell(
-                                                            onTap: () {
-                                                              Get.find<
-                                                                  ShoppeSearchController>()
-                                                                  .clearList();
-                                                              Get.toNamed(
-                                                                  RouteHelper
-                                                                      .search);
-                                                            },
-                                                            child:
-                                                            Container(
-                                                              height:
-                                                              30,
-                                                              width: 30,
-                                                              decoration:
-                                                              BoxDecoration(
-                                                                borderRadius:
-                                                                const BorderRadius.all(Radius.circular(50)),
-                                                                color: Colors
-                                                                    .white
-                                                                    .withOpacity(0.7),
-                                                              ),
-                                                              child:
-                                                              const Center(
-                                                                child:
-                                                                Icon(
-                                                                  Icons
-                                                                      .search,
-                                                                  color:
-                                                                  Colors.black,
-                                                                  size:
-                                                                  18,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        )
-                                                            : SizedBox(
-                                                          width: 25,
-                                                          child:
-                                                          IconButton(
-                                                            padding:
-                                                            EdgeInsets
-                                                                .zero,
-                                                            iconSize:
-                                                            25,
-                                                            icon: const Icon(
-                                                              Icons
-                                                                  .search,
-                                                              color: Colors
-                                                                  .black,
-                                                              size: 18,
-                                                            ),
-                                                            onPressed:
-                                                                () {
-                                                              Get.find<
-                                                                  ShoppeSearchController>()
-                                                                  .clearList();
-                                                              Get.toNamed(
-                                                                  RouteHelper
-                                                                      .search);
-                                                            },
-                                                          ),
-                                                        )
-                                                            : const SizedBox(),
-                                                        widget.showNotification
-                                                            ? widget.backgroundColor !=
-                                                            null &&
-                                                            widget.backgroundColor ==
-                                                                Colors
-                                                                    .transparent &&
-                                                            !widget.isMain
-                                                            ? SizedBox(
-                                                          width: 30,
-                                                          child:
-                                                          InkWell(
-                                                            onTap: () =>
-                                                                Get.toNamed(
-                                                                    RouteHelper.notification),
-                                                            child: GetBuilder<
-                                                                NotificationController>(
-                                                                builder:
-                                                                    (notificationController) {
-                                                                  return Container(
-                                                                    height:
-                                                                    30,
-                                                                    width:
-                                                                    30,
-                                                                    padding:
-                                                                    const EdgeInsets.all(3),
-                                                                    alignment:
-                                                                    Alignment.center,
-                                                                    // padding: const EdgeInsets.all(5),
+                                                                child: InkWell(
+                                                                  onTap: () {
+                                                                    Get.find<
+                                                                            ShoppeSearchController>()
+                                                                        .clearList();
+                                                                    Get.toNamed(
+                                                                        RouteHelper
+                                                                            .search);
+                                                                  },
+                                                                  child:
+                                                                      Container(
+                                                                    height: 30,
+                                                                    width: 30,
                                                                     decoration:
-                                                                    BoxDecoration(
-                                                                      shape:
-                                                                      BoxShape.circle,
+                                                                        BoxDecoration(
+                                                                      borderRadius: const BorderRadius
+                                                                          .all(
+                                                                          Radius.circular(
+                                                                              50)),
                                                                       color: Colors
                                                                           .white
-                                                                          .withOpacity(0.7),
+                                                                          .withOpacity(
+                                                                              0.7),
                                                                     ),
                                                                     child:
-                                                                    NotificationIcon(
-                                                                      backgroundColor:
-                                                                      widget.backgroundColor,
-                                                                      hasNotification:
-                                                                      notificationController.hasNotification,
+                                                                        const Center(
+                                                                      child:
+                                                                          Icon(
+                                                                        Icons
+                                                                            .search,
+                                                                        color: Colors
+                                                                            .black,
+                                                                        size:
+                                                                            18,
+                                                                      ),
                                                                     ),
-                                                                  );
-                                                                }),
-                                                          ),
-                                                        )
+                                                                  ),
+                                                                ),
+                                                              )
                                                             : SizedBox(
-                                                          width: 30,
-                                                          child:
-                                                          InkWell(
-                                                            child: GetBuilder<
-                                                                NotificationController>(
-                                                                builder:
-                                                                    (notificationController) {
-                                                                  return Container(
-                                                                    width:
-                                                                    30,
-                                                                    alignment:
-                                                                    Alignment.center,
-                                                                    decoration:
-                                                                    const BoxDecoration(
-                                                                      shape:
-                                                                      BoxShape.circle,
-                                                                    ),
-                                                                    child:
-                                                                    NotificationIcon(
-                                                                      backgroundColor:
-                                                                      widget.backgroundColor,
-                                                                      hasNotification:
-                                                                      notificationController.hasNotification,
-                                                                      isHome:
-                                                                      widget.isMain,
-                                                                    ),
-                                                                  );
-                                                                }),
-                                                            onTap: () =>
-                                                                Get.toNamed(
-                                                                    RouteHelper.notification),
-                                                          ),
-                                                        )
-                                                            : const SizedBox(),
-                                                        const SizedBox(width: 10,),
-                                                      ]),
-                                                    );
-                                                  }),
+                                                                width: 25,
+                                                                child:
+                                                                    IconButton(
+                                                                  padding:
+                                                                      EdgeInsets
+                                                                          .zero,
+                                                                  iconSize: 25,
+                                                                  icon:
+                                                                      const Icon(
+                                                                    Icons
+                                                                        .search,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    size: 18,
+                                                                  ),
+                                                                  onPressed:
+                                                                      () {
+                                                                    Get.find<
+                                                                            ShoppeSearchController>()
+                                                                        .clearList();
+                                                                    Get.toNamed(
+                                                                        RouteHelper
+                                                                            .search);
+                                                                  },
+                                                                ),
+                                                              )
+                                                        : const SizedBox(),
+                                                    widget.showNotification
+                                                        ? widget.backgroundColor !=
+                                                                    null &&
+                                                                widget.backgroundColor ==
+                                                                    Colors
+                                                                        .transparent &&
+                                                                !widget.isMain
+                                                            ? SizedBox(
+                                                                width: 30,
+                                                                child: InkWell(
+                                                                  onTap: () =>
+                                                                      Get.toNamed(
+                                                                          RouteHelper
+                                                                              .notification),
+                                                                  child: GetBuilder<
+                                                                          NotificationController>(
+                                                                      builder:
+                                                                          (notificationController) {
+                                                                    return Container(
+                                                                      height:
+                                                                          30,
+                                                                      width: 30,
+                                                                      padding:
+                                                                          const EdgeInsets
+                                                                              .all(
+                                                                              3),
+                                                                      alignment:
+                                                                          Alignment
+                                                                              .center,
+                                                                      // padding: const EdgeInsets.all(5),
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                        shape: BoxShape
+                                                                            .circle,
+                                                                        color: Colors
+                                                                            .white
+                                                                            .withOpacity(0.7),
+                                                                      ),
+                                                                      child:
+                                                                          NotificationIcon(
+                                                                        backgroundColor:
+                                                                            widget.backgroundColor,
+                                                                        hasNotification:
+                                                                            notificationController.hasNotification,
+                                                                      ),
+                                                                    );
+                                                                  }),
+                                                                ),
+                                                              )
+                                                            : SizedBox(
+                                                                width: 30,
+                                                                child: InkWell(
+                                                                  child: GetBuilder<
+                                                                          NotificationController>(
+                                                                      builder:
+                                                                          (notificationController) {
+                                                                    return Container(
+                                                                      width: 30,
+                                                                      alignment:
+                                                                          Alignment
+                                                                              .center,
+                                                                      decoration:
+                                                                          const BoxDecoration(
+                                                                        shape: BoxShape
+                                                                            .circle,
+                                                                      ),
+                                                                      child:
+                                                                          NotificationIcon(
+                                                                        backgroundColor:
+                                                                            widget.backgroundColor,
+                                                                        hasNotification:
+                                                                            notificationController.hasNotification,
+                                                                        isHome:
+                                                                            widget.isMain,
+                                                                      ),
+                                                                    );
+                                                                  }),
+                                                                  onTap: () =>
+                                                                      Get.toNamed(
+                                                                          RouteHelper
+                                                                              .notification),
+                                                                ),
+                                                              )
+                                                        : const SizedBox(),
+                                                    const SizedBox(
+                                                      width: 10,
+                                                    ),
+                                                  ]),
+                                                );
+                                              }),
                                             ],
                                           ),
                                         ),
@@ -450,8 +459,7 @@ class _CarSpaServicesState extends State<CarSpaServices> {
                                                     ),
                                                     fit: BoxFit.cover),
                                                 borderRadius:
-                                                BorderRadius.circular(
-                                                    10)),
+                                                    BorderRadius.circular(10)),
                                             /* child: CustomImage(
                                                   image: carSpaController
                                                       .carSpaBannerImages[0],
@@ -461,7 +469,9 @@ class _CarSpaServicesState extends State<CarSpaServices> {
                                         ),
                                       ),
                                       Expanded(
-                                        child: Padding(padding: const EdgeInsets.only(left: 12,right: 12),
+                                        child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 12, right: 12),
                                             child: SingleChildScrollView(
                                               scrollDirection: Axis.horizontal,
                                               physics: const ScrollPhysics(),
@@ -469,41 +479,62 @@ class _CarSpaServicesState extends State<CarSpaServices> {
                                                 children: [
                                                   Column(
                                                     children: [
-                                                      const SizedBox(height: 30,),
+                                                      const SizedBox(
+                                                        height: 30,
+                                                      ),
                                                       GestureDetector(
-                                                        onTap: (){
-                                                          if (carSpaController.carSpaCategory.isEmpty) {
-                                                            carSpaController.getAllCarSpaCategory();
+                                                        onTap: () {
+                                                          if (carSpaController
+                                                              .carSpaCategory
+                                                              .isEmpty) {
+                                                            carSpaController
+                                                                .getAllCarSpaCategory();
                                                           }
-                                                          Get.toNamed(RouteHelper.serviceListing, arguments: [
-                                                            {
-                                                              'title': 'Mobile Car Wash',
-                                                              'type': 'carSpa',
-                                                              'data': carSpaController.carSpaCategory
-                                                            }
-                                                          ]);
+                                                          Get.toNamed(
+                                                              RouteHelper
+                                                                  .serviceListing,
+                                                              arguments: [
+                                                                {
+                                                                  'title':
+                                                                      'Mobile Car Wash',
+                                                                  'type':
+                                                                      'carSpa',
+                                                                  'data': carSpaController
+                                                                      .carSpaCategory
+                                                                }
+                                                              ]);
                                                         },
                                                         child: Container(
                                                           height: 40,
                                                           width: 40,
-                                                          decoration: const BoxDecoration(image: DecorationImage(image: AssetImage("assets/image/View All image.png"))),
+                                                          decoration: const BoxDecoration(
+                                                              image: DecorationImage(
+                                                                  image: AssetImage(
+                                                                      "assets/image/View All image.png"))),
                                                         ),
                                                       ),
-                                                      const SizedBox(height: 9,),
-                                                      Text("view all",style: verySmallFontBold(Colors.black),)
+                                                      const SizedBox(
+                                                        height: 9,
+                                                      ),
+                                                      Text(
+                                                        "view all",
+                                                        style:
+                                                            verySmallFontBold(
+                                                                Colors.black),
+                                                      )
                                                     ],
                                                   ),
-                                                  const SizedBox(width: 10,),
+                                                  const SizedBox(
+                                                    width: 10,
+                                                  ),
                                                   SizedBox(
                                                     height: 92,
-                                                    child:  dataList(context: context),
+                                                    child: dataList(
+                                                        context: context),
                                                   )
-
                                                 ],
                                               ),
-                                            )
-
-                                        ),
+                                            )),
                                       ),
                                     ],
                                   ),
@@ -536,37 +567,39 @@ class _CarSpaServicesState extends State<CarSpaServices> {
                                         )
                                       ],
                                     ),*/
-
                               ),
                               Expanded(
                                 child: CustomScrollView(
                                   shrinkWrap: true,
-                                  physics: const AlwaysScrollableScrollPhysics(),
+                                  physics:
+                                      const AlwaysScrollableScrollPhysics(),
                                   slivers: [
                                     SliverList(
                                       delegate: SliverChildListDelegate(
                                         List.generate(
-                                            carSpaController.carSpaService.length,
-                                            (indx) {
+                                            carSpaController
+                                                .carSpaService.length, (indx) {
                                           return CarSpaServiceTile(
                                             index: indx,
                                             carSpaServiceResultData:
-                                                carSpaController.carSpaService[indx],
+                                                carSpaController
+                                                    .carSpaService[indx],
                                           );
                                         }),
                                       ),
                                     ),
                                     SliverToBoxAdapter(
                                       child: SizedBox(
-                                        width: MediaQuery.of(context).size.width,
+                                        width:
+                                            MediaQuery.of(context).size.width,
                                         height: 160,
                                         child: Container(
                                           height: 50,
                                           decoration: BoxDecoration(
                                               border: Border.all(
-                                                color: Colors.grey.withOpacity(0.1),
-                                                width: 0.5,
-                                              )),
+                                            color: Colors.grey.withOpacity(0.1),
+                                            width: 0.5,
+                                          )),
                                           child: const Padding(
                                             padding: EdgeInsets.all(12),
                                             child: ClientsTestimonial(),
@@ -591,10 +624,7 @@ class _CarSpaServicesState extends State<CarSpaServices> {
           );
   }
 
-
-
-  dataList(
-      {required BuildContext context}) {
+  dataList({required BuildContext context}) {
     return GetBuilder<CarSpaController>(builder: (carSpaController) {
       return ListView.builder(
         itemCount: carSpaController.carSpaCategory.length,
@@ -603,7 +633,7 @@ class _CarSpaServicesState extends State<CarSpaServices> {
         physics: const ScrollPhysics(),
         itemBuilder: (context, index) {
           return Padding(
-            padding: const EdgeInsets.only(left: 4,right: 4),
+            padding: const EdgeInsets.only(left: 4, right: 4),
             child: ServiceListTile(
               data: carSpaController.carSpaCategory[index],
               index: index,
