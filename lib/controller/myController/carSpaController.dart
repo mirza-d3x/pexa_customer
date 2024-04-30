@@ -320,4 +320,27 @@ class CarSpaController extends GetxController implements GetxService {
     carSpaAddOns.clear();
     update();
   }
+
+  @override
+  void onClose() {
+    carSpaCategory = [].obs;
+    carSpaService = [].obs;
+    carSpaServiceProperty = [].obs;
+    carSpaAddOnTotal = 0.obs;
+    carSpaAddOnRadioState = [].obs;
+    carSpaTimeSlot = [].obs;
+    carSpaAddOns = [].obs;
+    isFound = true.obs;
+    carSpaOffers = [].obs;
+    carSpaOfferCheck = [].obs;
+    offerApplicable = false.obs;
+    offerCouponId = ''.obs;
+    discountedAmount = 0.0.obs;
+    discount = 0.0.obs;
+    offerEmpty = false.obs;
+    applyOfferStatus = false.obs;
+    applyOfferServiceId = ''.obs;
+    applyOfferId = ''.obs;
+    super.onClose();
+  }
 }
