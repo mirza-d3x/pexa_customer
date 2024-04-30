@@ -47,18 +47,17 @@ class _TimeSlotGridState extends State<TimeSlotGrid> {
                 child: Container(
                   margin: const EdgeInsets.all(5),
                   decoration: BoxDecoration(
-                    color: (carSpaController.carSpaTimeSlot.contains(
-                                carSpaTimeController.timeList[index]['slot']) &&
-                            DateTime.now().isBefore(DateTime.parse(
-                                "${carSpaTimeController.dateShow} ${carSpaTimeController.timeList[index]['time']}.000")))
-                        ? (carSpaTimeController.index.value == index)
-                            ? blackPrimary
-                            : botAppBarColor
-                        : Colors.transparent,
-                    borderRadius: BorderRadius.circular(5),
-                    border: Border.all(color: Colors.black12)
-
-                  ),
+                      color: (carSpaController.carSpaTimeSlot.contains(
+                                  carSpaTimeController.timeList[index]
+                                      ['slot']) &&
+                              DateTime.now().isBefore(DateTime.parse(
+                                  "${carSpaTimeController.dateShow} ${carSpaTimeController.timeList[index]['time']}.000")))
+                          ? (carSpaTimeController.index.value == index)
+                              ? blackPrimary
+                              : botAppBarColor
+                          : Colors.transparent,
+                      borderRadius: BorderRadius.circular(5),
+                      border: Border.all(color: Colors.black12)),
                   child: Center(
                       child: carSpaTimeController.dateLoad.value
                           ? Text(carSpaTimeController.timeList[index]['text']!,

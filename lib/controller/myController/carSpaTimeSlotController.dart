@@ -9,7 +9,7 @@ import 'package:get/get.dart';
 class CarSpaTimeSlotController extends GetxController implements GetxService {
   var dateShow = DateTime.now().toString().substring(0, 10).obs;
   var serviceId = "".obs;
-  var index = 3000.obs;
+  var index = 0.obs; // Initialize index to 0
   var paymentIndex = 1.obs;
   var dateLoad = false.obs;
   var isLoad = false.obs;
@@ -43,7 +43,10 @@ class CarSpaTimeSlotController extends GetxController implements GetxService {
     if (DateTime.parse(
             '${DateTime.now().toString().substring(0, 10)} 19:00:00.000')
         .isBefore(DateTime.now())) {
-      date = DateTime.now().add(const Duration(days: 1)).toString().substring(0, 10);
+      date = DateTime.now()
+          .add(const Duration(days: 1))
+          .toString()
+          .substring(0, 10);
     } else {
       date = DateTime.now().toString().substring(0, 10);
     }
@@ -99,13 +102,14 @@ class CarSpaTimeSlotController extends GetxController implements GetxService {
             textStyleCurrentDayOnCalendar: const TextStyle(color: Colors.black),
             paddingMonthHeader: const EdgeInsets.all(12),
             paddingDateYearHeader: const EdgeInsets.all(20),
-            textStyleDayButton: const TextStyle(fontSize: 25, color: Colors.white)),
+            textStyleDayButton:
+                const TextStyle(fontSize: 25, color: Colors.white)),
       );
     } catch (e) {
       print(e.toString());
     }
     if (newDateTime != null) {
-      index.value = 3000;
+      index.value = 0; // Reset index to 0
       dateLoad.value = false;
       update();
       dateShow.value = newDateTime.toString().substring(0, 10);
@@ -119,33 +123,23 @@ class CarSpaTimeSlotController extends GetxController implements GetxService {
   setIndex(carSpaController) {
     if (Get.find<CarSpaController>().carSpaTimeSlot.isNotEmpty) {
       final checkOutController = Get.find<ServiceCheckOutController>();
-      timeList.asMap().forEach((
-        value,
-        element,
-      ) {
-        if (element['slot'] == carSpaController.carSpaTimeSlot[0]) {
-          if (DateTime.now().toString().substring(0, 10) == dateShow.value) {
-            if (DateTime.now().isBefore(DateTime.parse(
-                "${dateShow.value} ${timeList[value]['time']}.000"))) {
-              index.value = value;
-              dateLoad.value = true;
-              update();
-            } else {
-              index.value = value + 1;
-              dateLoad.value = true;
-              update();
-            }
-          } else {
-            index.value = value;
-            dateLoad.value = true;
-            update();
-          }
+      int initialIndex = -1; // Initialize initial index to -1
+
+      // Find the index of the first available time slot
+      for (int i = 0; i < timeList.length; i++) {
+        if (carSpaController.carSpaTimeSlot.contains(timeList[i]['slot'])) {
+          initialIndex = i;
+          break; // Exit loop once first available time slot is found
         }
-      });
-      checkOutController.timeSlot.value = timeList[index.value]['slot']!;
-      update();
+      }
+
+      // If initial index is found, set it and update the UI
+      if (initialIndex != -1) {
+        index.value = initialIndex;
+        dateLoad.value = true;
+        update();
+        checkOutController.timeSlot.value = timeList[index.value]['slot']!;
+      }
     }
-    dateLoad.value = true;
-    update();
   }
 }

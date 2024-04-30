@@ -21,6 +21,8 @@ class ImageSlider extends StatelessWidget {
     await Get.find<BannerController>().bannerData(
       'shoppeCategoriesListing',
     );
+    await Get.find<CarSpaController>()
+        .getCarSpaServiceWithCatId("62163f5f0e80605ad0545a1b");
   }
 
   @override
@@ -76,6 +78,7 @@ class ImageSlider extends StatelessWidget {
                         } else if (index == 2) {
                           carSpaController.getCarSpaServiceWithCatId(
                               carSpaController.carSpaCategory[0].id);
+                          carSpaController.setRadioStatusList(14);
                           Get.toNamed(RouteHelper.carSpaService, arguments: {
                             'title': carSpaController.carSpaCategory[0].name
                           });
