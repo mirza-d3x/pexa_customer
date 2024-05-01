@@ -8,6 +8,7 @@ import 'package:shoppe_customer/controller/myController/initial_loader_controlle
 import 'package:shoppe_customer/data/repository/splash_repo.dart';
 import 'package:get/get.dart';
 import 'package:shoppe_customer/helper/route_helper.dart';
+import 'package:shoppe_customer/util/utils.dart';
 import 'package:shoppe_customer/view/base/custom_snackbar.dart';
 
 class SplashController extends GetxController implements GetxService {
@@ -34,6 +35,7 @@ class SplashController extends GetxController implements GetxService {
   void route({String? productId}) async {
     if (!GetPlatform.isWeb) {
       if (Get.find<ConnectivityController>().status) {
+        checkForUpdate();
         Get.find<AppVersionController>().checkVersion();
         /*print("vysh!!!! :${Get.find<AuthFactorsController>().isLoggedIn.value}");*/
         if (Get.find<AuthFactorsController>().isLoggedIn.value) {
@@ -88,9 +90,9 @@ class SplashController extends GetxController implements GetxService {
           Get.find<locationPermissionController>()
               .checkLocationStatus()
               .then((value) {
-
             Get.find<locationPermissionController>()
-                .getUserLocation(isForAddress: false);});
+                .getUserLocation(isForAddress: false);
+          });
           /*Get.find<locationPermissionController>().checkLocationStatus();*/
         }));
       } else {
@@ -103,9 +105,9 @@ class SplashController extends GetxController implements GetxService {
           Get.find<locationPermissionController>()
               .checkLocationStatus()
               .then((value) {
-
             Get.find<locationPermissionController>()
-                .getUserLocation(isForAddress: false);});
+                .getUserLocation(isForAddress: false);
+          });
           /*Get.find<locationPermissionController>().checkLocationStatus();*/
         }));
       }
