@@ -1,24 +1,30 @@
 import 'dart:collection';
+import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart' as geo;
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-//import 'package:google_place/google_place.dart';
 import 'package:shoppe_customer/controller/myController/addressController.dart';
 import 'package:shoppe_customer/controller/myController/categoryController.dart';
 import 'package:shoppe_customer/controller/myController/locationPermissionController.dart';
+import 'package:http/http.dart' as http;
+import 'package:shoppe_customer/data/models/google_places_model/google_places_model.dart';
 
 class SearchLocationController extends GetxController {
+  SearchLocationController() {
+    getUserCurrentLocation();
+  }
   var currentPosition = [].obs;
   var recentSearchList = [].obs;
-  // late GooglePlace googlePlace;
-  // List<AutocompletePrediction>? predictions = [];
   var predictions = [];
-  bool isLoading = false;
+  RxBool isLoading = true.obs;
   bool isAddressSetting = false;
   bool noValue = true;
   final addressController = Get.find<AddressControllerFile>();
   TextEditingController searchController = TextEditingController();
+  late final NearPlaces nearPlaces;
 
   clearRecentSearch() {
     recentSearchList.clear();
@@ -38,22 +44,37 @@ class SearchLocationController extends GetxController {
         LinkedHashSet<String>.from(recentSearchList).toList();
   }
 
-  void autoCompleteSearch({required String searchKey}) async {
-    if (searchKey.isNotEmpty) {
-      isLoading = true;
-      update();
-      //   var result = await googlePlace.autocomplete
-      //       .get(searchKey, components: [Component('country', 'IN')]);
-      //   if (result != null && result.predictions != null) {
-      //     predictions = result.predictions;
-      //     isLoading = false;
-      //     update();
-      //   }
-      // } else {
-      //   predictions!.clear();
+  getUserCurrentLocation() async {
+    try {
+      Position position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.low);
+      _getLocationName(position);
+    } catch (error, stackTrace) {
+      log("Error while getting User current location",
+          error: error, stackTrace: stackTrace);
     }
-    isLoading = false;
-    update();
+  }
+
+  Future _getLocationName(Position position) async {
+    try {
+      const apiKey = "AIzaSyCcT9L1qGXL7RE-UP7qML3_U8bLRgUahyw";
+      final url = Uri.parse(
+          'https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.latitude},${position.longitude}&key=$apiKey');
+      final response = await http.get(url);
+
+      // log(" status_code: ${response.statusCode} Response: ${response.body}");
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        nearPlaces = NearPlaces.fromJson(data);
+        isLoading = RxBool(false);
+        update();
+      } else {
+        log(" status_code: ${response.statusCode} Response: ${response.body}");
+      }
+    } catch (error, stackTrace) {
+      log("Error while getting Data from Google Api",
+          error: error, stackTrace: stackTrace);
+    }
   }
 
   void updateNovalue(bool v) {
@@ -71,13 +92,10 @@ class SearchLocationController extends GetxController {
       {required String value, bool isForAddress = false}) async {
     isAddressSetting = true;
     update();
-    List<geo.Location> location =
-        await geo.locationFromAddress(value);
+    List<geo.Location> location = await geo.locationFromAddress(value);
     if (isForAddress) {
-      List<geo.Placemark> placemarks =
-          await geo.placemarkFromCoordinates(
-              location[0].latitude.toDouble(),
-              location[0].longitude.toDouble());
+      List<geo.Placemark> placemarks = await geo.placemarkFromCoordinates(
+          location[0].latitude.toDouble(), location[0].longitude.toDouble());
       addressController.setCurrentPositionData(currentPosit: [
         location[0].latitude.toDouble(),
         location[0].longitude.toDouble()
