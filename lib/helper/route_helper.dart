@@ -157,7 +157,9 @@ class RouteHelper {
           //   pageFromLogin: Get.parameters['page'] == 'login',
           //   productId: Get.parameters['productId'],
           // )
-          return getRoute(const BottomNew());
+          return getRoute(const BottomNew(
+            seletedIndex: 0,
+          ));
         }),
     GetPage(
         name: splash,
