@@ -11,8 +11,8 @@ import 'package:shoppe_customer/view/widgets/bouncing.dart';
 class LocationSearchPage extends StatelessWidget {
   LocationSearchPage(
       {super.key, Key? keys, this.isFromHome, this.isForAddress});
-  bool? isFromHome;
-  bool? isForAddress;
+  final bool? isFromHome;
+  final bool? isForAddress;
 
   final SearchLocationController c = Get.put(SearchLocationController());
 

@@ -12,8 +12,8 @@ import 'package:shoppe_customer/view/screens/error_screen/noInternetScreen.dart'
 import 'package:shoppe_customer/view/widgets/bouncing.dart';
 
 class LocationScreen extends StatefulWidget {
-  String? pid;
-  LocationScreen({super.key, this.pid});
+  final String? pid;
+  const LocationScreen({super.key, this.pid});
 
   @override
   State<LocationScreen> createState() => _LocationScreenState();
@@ -74,8 +74,7 @@ class _LocationScreenState extends State<LocationScreen> {
                                         .getUserLocation(isForAddress: false);
                                     Get.find<SplashController>()
                                         .route(productId: widget.pid);
-                                      }
-                                  );
+                                  });
                                 },
                                 child: Center(
                                   child: Container(
@@ -85,8 +84,8 @@ class _LocationScreenState extends State<LocationScreen> {
                                         : Get.width * 0.2,
                                     decoration: BoxDecoration(
                                       color: botAppBarColor,
-                                      borderRadius:
-                                          const BorderRadius.all(Radius.circular(30)),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(30)),
                                     ),
                                     child: Center(
                                       child: /*controller.loaderHelper.isLoading
@@ -117,8 +116,8 @@ class _LocationScreenState extends State<LocationScreen> {
                                         : Get.width * 0.2,
                                     decoration: BoxDecoration(
                                       color: Colors.grey[400],
-                                      borderRadius:
-                                          const BorderRadius.all(Radius.circular(30)),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(30)),
                                     ),
                                     child: Center(
                                       child: /*controller.loaderHelper.isLoading
