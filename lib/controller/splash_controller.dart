@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:shoppe_customer/controller/myController/appVersionController.dart';
 import 'package:shoppe_customer/controller/myController/authFactorController.dart';
@@ -44,7 +46,7 @@ class SplashController extends GetxController implements GetxService {
               .then((value) async {
             if (value != null) {
               String token = (await FirebaseMessaging.instance.getToken())!;
-              print("FCM TOKEN : $token");
+              log("FCM TOKEN : $token");
               redirectTo(productId: productId);
             }
           });
