@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:shoppe_customer/helper/enums.dart';
 import 'package:shoppe_customer/helper/route_helper.dart';
 import 'package:shoppe_customer/data/models/service_model.dart';
@@ -25,7 +27,7 @@ Widget carSpaAddressBottomUpView(
   final carSpaController = Get.find<CarSpaController>();
   final carSpaTimeSlotController = Get.find<CarSpaTimeSlotController>();
   return Container(
-      height: Get.height * 0.30,
+      // height: Get.height * 0.30,
       padding: const EdgeInsets.symmetric(horizontal: 10),
       decoration: const BoxDecoration(
           color: Colors.white,
@@ -34,12 +36,13 @@ Widget carSpaAddressBottomUpView(
             topRight: Radius.circular(20),
           )),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           const SizedBox(
             height: 15,
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 10,right: 10),
+            padding: const EdgeInsets.only(left: 10, right: 10),
             child: Row(
               children: [
                 Expanded(
@@ -48,15 +51,10 @@ Widget carSpaAddressBottomUpView(
                       // Get.find<locationPermissionController>()
                       //     .determinePosition();
                       // Get.find<SearchLocationController>().resetSearch();
-                      Get.toNamed(
-                          RouteHelper
-                              .locationSearch,
-                          arguments: {
-                            'page': Get
-                                .currentRoute,
-                            'isForAddress':
-                            false
-                          });
+                      Get.toNamed(RouteHelper.locationSearch, arguments: {
+                        'page': Get.currentRoute,
+                        'isForAddress': false
+                      });
                     },
                     child: Container(
                       child: Row(
@@ -64,57 +62,61 @@ Widget carSpaAddressBottomUpView(
                           Icon(
                             Icons.location_pin,
                             size: 18,
-                            color: Colors
-                                .yellow[600],
+                            color: Colors.yellow[600],
                           ),
                           const SizedBox(width: 5),
                           Expanded(
                               child: Row(
-                                children: [
-                                  GetBuilder<
-                                      locationPermissionController>(
-                                      builder:
-                                          (currentLocationController) {
-                                        return currentLocationController
-                                            .userLocationString
-                                            .toString()
-                                            .contains(
-                                            ',')
-                                            ? Text(
-                                          ('${currentLocationController.userLocationString!.split(',')[0]},${currentLocationController.userLocationString!.split(',')[1]}').length >
-                                              20
-                                              ? '${('${currentLocationController.userLocationString!.split(',')[0]},${currentLocationController.userLocationString!.split(',')[1]}').substring(0, 19)}...'
-                                              : currentLocationController.userLocationString!.split(',')[0] == '' && currentLocationController.userLocationString!.split(',').isEmpty
-                                              ? 'Unknown Place'
-                                              : '${currentLocationController.userLocationString!.split(',')[0]},${currentLocationController.userLocationString!.split(',')[1]}',
-                                          style: smallFont(
-                                              Colors.black),
-                                          overflow:
-                                          TextOverflow.ellipsis,
-                                          maxLines:
-                                          1,
-                                        )
-                                            : Text(
-                                          currentLocationController.userLocationString.toString().length >
-                                              20
-                                              ? currentLocationController.userLocationString.toString().substring(0,
-                                              10)
-                                              : currentLocationController.userLocationString.toString(),
-                                          style: smallFont(
-                                              Colors.black),
-                                          overflow:
-                                          TextOverflow.ellipsis,
-                                          maxLines:
-                                          1,
-                                        );
-                                      }),
-                                  const Icon(
-                                    Icons
-                                        .keyboard_arrow_down_outlined,
-                                    size: 20,
-                                  )
-                                ],
-                              )),
+                            children: [
+                              GetBuilder<locationPermissionController>(
+                                  builder: (currentLocationController) {
+                                return currentLocationController
+                                        .userLocationString
+                                        .toString()
+                                        .contains(',')
+                                    ? Text(
+                                        ('${currentLocationController.userLocationString!.split(',')[0]},${currentLocationController.userLocationString!.split(',')[1]}')
+                                                    .length >
+                                                20
+                                            ? '${('${currentLocationController.userLocationString!.split(',')[0]},${currentLocationController.userLocationString!.split(',')[1]}').substring(0, 19)}...'
+                                            : currentLocationController
+                                                            .userLocationString!
+                                                            .split(',')[0] ==
+                                                        '' &&
+                                                    currentLocationController
+                                                        .userLocationString!
+                                                        .split(',')
+                                                        .isEmpty
+                                                ? 'Unknown Place'
+                                                : '${currentLocationController.userLocationString!.split(',')[0]},${currentLocationController.userLocationString!.split(',')[1]}',
+                                        style: smallFont(Colors.black),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
+                                      )
+                                    : Text(
+                                        currentLocationController
+                                                    .userLocationString
+                                                    .toString()
+                                                    .length >
+                                                20
+                                            ? currentLocationController
+                                                .userLocationString
+                                                .toString()
+                                                .substring(0, 10)
+                                            : currentLocationController
+                                                .userLocationString
+                                                .toString(),
+                                        style: smallFont(Colors.black),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
+                                      );
+                              }),
+                              const Icon(
+                                Icons.keyboard_arrow_down_outlined,
+                                size: 20,
+                              )
+                            ],
+                          )),
                         ],
                       ),
                     ),
@@ -122,54 +124,55 @@ Widget carSpaAddressBottomUpView(
                 ),
                 isForCheckout
                     ? Row(
-                  children: [
-                    Container(
-                      padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                      child: Text(
-                        'Selected Address',
-                        style: mediumFont(Colors.black),
-                      ),
-                    ),
-                  ],
-                )
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 5),
+                            child: Text(
+                              'Selected Address',
+                              style: mediumFont(Colors.black),
+                            ),
+                          ),
+                        ],
+                      )
                     : Bouncing(
-                  onPress: () {
-                    Navigator.pop(context!);
-                    addressController.fromPexaShoppe.value = false;
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => AddressDetailsPage(
-                            backContext: context,
-                          )),
-                    );
-                    // Get.to(() => AddressDetailsPage(backContext: context,));
-                  },
-                  child: IntrinsicWidth(
-                    child: Container(
-                      padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                      decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.all(Radius.circular(4)),
-                          border: Border.all(color: Colors.yellow)
-                        /* boxShadow: [
+                        onPress: () {
+                          Navigator.pop(context!);
+                          addressController.fromPexaShoppe.value = false;
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AddressDetailsPage(
+                                      backContext: context,
+                                    )),
+                          );
+                          // Get.to(() => AddressDetailsPage(backContext: context,));
+                        },
+                        child: IntrinsicWidth(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 5),
+                            decoration: BoxDecoration(
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(4)),
+                                border: Border.all(color: Colors.yellow)
+                                /* boxShadow: [
                             BoxShadow(
                               color: Colors.grey.withOpacity(0.5),
                               blurRadius: 7,
                               offset: Offset(0, 3),
                             ),
                           ],*/
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Change',
-                          style: mediumFont(Colors.black),
+                                ),
+                            child: Center(
+                              child: Text(
+                                'Change',
+                                style: mediumFont(Colors.black),
+                              ),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                ),
               ],
             ),
           ),
@@ -206,13 +209,13 @@ Widget carSpaAddressBottomUpView(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(4)),
                         border: Border.all(color: Colors.yellow)
-                       *//* boxShadow: [
+                       */ /* boxShadow: [
                           BoxShadow(
                             color: Colors.grey.withOpacity(0.5),
                             blurRadius: 7,
                             offset: Offset(0, 3),
                           ),
-                        ],*//*
+                        ],*/ /*
                       ),
                       child: Center(
                         child: Text(
@@ -246,13 +249,15 @@ Widget carSpaAddressBottomUpView(
                   ? Container(
                       padding: const EdgeInsets.all(15),
                       decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.all(Radius.circular(7)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(7)),
                         color: Colors.white,
                         boxShadow: [
                           BoxShadow(
                             color: Colors.grey.withOpacity(0.5),
                             blurRadius: 7,
-                            offset: const Offset(0, 3), // changes position of shadow
+                            offset: const Offset(
+                                0, 3), // changes position of shadow
                           ),
                         ],
                       ),
@@ -276,8 +281,8 @@ Widget carSpaAddressBottomUpView(
                                       vertical: 0.1, horizontal: 5),
                                   decoration: BoxDecoration(
                                       color: Colors.grey[200],
-                                      borderRadius:
-                                          const BorderRadius.all(Radius.circular(5))),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(5))),
                                   child: Text(
                                       addressController.defaultAddress!.type!,
                                       style: mediumFont(Colors.black))),
@@ -313,86 +318,94 @@ Widget carSpaAddressBottomUpView(
             onPress: addressController.addressList!.isEmpty
                 ? null
                 : () {
-                    if (isForCheckout) {
-                      if (Get.find<CouponController>().isApplied.value) {
-                        Map<String, dynamic> data = {
-                          "id": checkOutController.serviceId.value,
-                          "coordinate": [
-                            addressController.defaultAddress!.location![1],
-                            addressController.defaultAddress!.location![0]
-                          ],
-                          "timeSlot": checkOutController.timeSlot.value,
-                          "addOns": carSpaController.carSpaAddOns,
-                          "date": Get.find<CarSpaTimeSlotController>()
-                              .dateShow
-                              .toString(),
-                          "couponCode":
-                              Get.find<CouponController>().couponName.value
-                        };
-                        print(data);
-                        carSpaTimeSlotController.paymentIndex.value == 1
-                            ? Get.toNamed(RouteHelper.carSpaPayment)
-                            : checkOutController
-                                .placeOrder(data, MainCategory.CARSPA)
-                                .then((value) => Get.to(() => const SuccessPage()));
-                      } else if (Get.find<CarSpaController>()
-                          .offerApplicable
-                          .value) {
-                        Map<String, dynamic> data = {
-                          "id": checkOutController.serviceId.value,
-                          "coordinate": [
-                            addressController.defaultAddress!.location![1],
-                            addressController.defaultAddress!.location![0]
-                          ],
-                          "timeSlot": checkOutController.timeSlot.value,
-                          "addOns": carSpaController.carSpaAddOns,
-                          "date": Get.find<CarSpaTimeSlotController>()
-                              .dateShow
-                              .toString(),
-                          "offerId":
-                              Get.find<CarSpaController>().offerCouponId.value
-                        };
-                        print(data);
+                    try {
+                      if (isForCheckout) {
+                        if (Get.find<CouponController>().isApplied.value) {
+                          Map<String, dynamic> data = {
+                            "id": checkOutController.serviceId.value,
+                            "coordinate": [
+                              addressController.defaultAddress!.location![1],
+                              addressController.defaultAddress!.location![0]
+                            ],
+                            "timeSlot": checkOutController.timeSlot.value,
+                            "addOns": carSpaController.carSpaAddOns,
+                            "date": Get.find<CarSpaTimeSlotController>()
+                                .dateShow
+                                .toString(),
+                            "couponCode":
+                                Get.find<CouponController>().couponName.value
+                          };
+                          print(data);
+                          carSpaTimeSlotController.paymentIndex.value == 1
+                              ? Get.toNamed(RouteHelper.carSpaPayment,
+                                  arguments: data)
+                              : checkOutController
+                                  .placeOrder(data, MainCategory.CARSPA)
+                                  .then((value) =>
+                                      Get.to(() => const SuccessPage()));
+                        } else if (Get.find<CarSpaController>()
+                            .offerApplicable
+                            .value) {
+                          Map<String, dynamic> data = {
+                            "id": checkOutController.serviceId.value,
+                            "coordinate": [
+                              addressController.defaultAddress!.location![1],
+                              addressController.defaultAddress!.location![0]
+                            ],
+                            "timeSlot": checkOutController.timeSlot.value,
+                            "addOns": carSpaController.carSpaAddOns,
+                            "date": Get.find<CarSpaTimeSlotController>()
+                                .dateShow
+                                .toString(),
+                            "offerId":
+                                Get.find<CarSpaController>().offerCouponId.value
+                          };
+                          print(data);
 
-                        carSpaTimeSlotController.paymentIndex.value == 1
-                            ? Get.toNamed(RouteHelper.carSpaPayment)
-                            : checkOutController
-                                .placeOrder(data, MainCategory.CARSPA)
-                                .then((value) => Get.to(() => const SuccessPage()));
+                          carSpaTimeSlotController.paymentIndex.value == 1
+                              ? Get.toNamed(RouteHelper.carSpaPayment)
+                              : checkOutController
+                                  .placeOrder(data, MainCategory.CARSPA)
+                                  .then((value) =>
+                                      Get.to(() => const SuccessPage()));
+                        } else {
+                          Map<String, dynamic> data = {
+                            "id": checkOutController.serviceId.value,
+                            "coordinate": [
+                              addressController.defaultAddress!.location![1],
+                              addressController.defaultAddress!.location![0]
+                            ],
+                            "timeSlot": checkOutController.timeSlot.value,
+                            "addOns": carSpaController.carSpaAddOns,
+                            "date": Get.find<CarSpaTimeSlotController>()
+                                .dateShow
+                                .toString()
+                          };
+                          print(data);
+                          carSpaTimeSlotController.paymentIndex.value == 1
+                              ? Get.toNamed(RouteHelper.carSpaPayment,
+                                  arguments: {'body': data})
+                              : checkOutController
+                                  .placeOrder(data, MainCategory.CARSPA)
+                                  .then((value) =>
+                                      Get.to(() => const SuccessPage()));
+                        }
                       } else {
-                        Map<String, dynamic> data = {
-                          "id": checkOutController.serviceId.value,
-                          "coordinate": [
-                            addressController.defaultAddress!.location![1],
-                            addressController.defaultAddress!.location![0]
-                          ],
-                          "timeSlot": checkOutController.timeSlot.value,
-                          "addOns": carSpaController.carSpaAddOns,
-                          "date": Get.find<CarSpaTimeSlotController>()
-                              .dateShow
-                              .toString()
-                        };
-                        print(data);
-                        carSpaTimeSlotController.paymentIndex.value == 1
-                            ? Get.toNamed(RouteHelper.carSpaPayment,
-                                arguments: {'body': data})
-                            : checkOutController
-                                .placeOrder(data, MainCategory.CARSPA)
-                                .then((value) => Get.to(() => const SuccessPage()));
+                        Get.find<CouponController>().clearValue();
+                        carSpaController.clearOffer();
+
+                        Get.find<CarSpaTimeSlotController>()
+                            .initialLoad(carSpaServiceResultData!.id);
+
+                        Get.find<ServiceCheckOutController>()
+                            .setServiceId(carSpaServiceResultData.id!);
+                        Get.back();
+                        Get.toNamed(RouteHelper.carSpaTimeSlotPage, arguments: {
+                          'carSpaServiceResultData': carSpaServiceResultData,
+                        });
                       }
-                    } else {
-                      Get.find<CouponController>().clearValue();
-                      carSpaController.clearOffer();
-
-                      Get.find<CarSpaTimeSlotController>()
-                          .initialLoad(carSpaServiceResultData!.id);
-
-                      Get.find<ServiceCheckOutController>()
-                          .setServiceId(carSpaServiceResultData.id!);
-                      Get.back();
-                      Get.toNamed(RouteHelper.carSpaTimeSlotPage, arguments: {
-                        'carSpaServiceResultData': carSpaServiceResultData,
-                      });
+                    } catch (error, stackTrace) {
+                      log("Error", error: error, stackTrace: stackTrace);
                     }
                   },
             child: Container(

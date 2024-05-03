@@ -1,4 +1,9 @@
+import 'package:flutter/widgets.dart';
+import 'package:shoppe_customer/controller/myController/buy_now_controller.dart';
+import 'package:shoppe_customer/controller/myController/categoryController.dart';
 import 'package:shoppe_customer/data/models/service_model.dart';
+import 'package:shoppe_customer/helper/fonts.dart';
+import 'package:shoppe_customer/helper/price_converter.dart';
 import 'package:shoppe_customer/util/new_fonts.dart';
 import 'package:shoppe_customer/controller/myController/carSpaController.dart';
 import 'package:shoppe_customer/controller/myController/carSpaTimeSlotController.dart';
@@ -16,8 +21,6 @@ import 'package:get/get.dart';
 
 class CarSpaTimeSlotView extends StatelessWidget {
   CarSpaTimeSlotView({super.key, Key? keys, this.carSpaServiceResultData});
-  // final carSpaTimeSlotController = Get.find<CarSpaTimeSlotController>();
-  // final carSpaController = Get.find<CarSpaController>();
   final ServiceId? carSpaServiceResultData;
 
   final checkOutController = Get.find<ServiceCheckOutController>();
@@ -28,190 +31,134 @@ class CarSpaTimeSlotView extends StatelessWidget {
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: const CustomAppBar(
         title: "Order Details",
-        // backgroundColor: Theme.of(context).backgroundColor,
       ),
       body: GetBuilder<CarSpaTimeSlotController>(
-          builder: (carSpaTimeSlotController) {
-        return GetBuilder<CarSpaController>(builder: (carSpaController) {
-          return Padding(
-            padding: const EdgeInsets.all(10),
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Select Date',
-                    style: mediumFont(Colors.black),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Bouncing(
-                    onPress: () {
-                      carSpaTimeSlotController.changeDate(
-                          context, carSpaServiceResultData);
-                    },
-                    child: CarSpaShowDate(),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    'Select Time Slot',
-                    style: mediumFont(Colors.black),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  carSpaTimeSlotController.isLoad.value
-                      ? SizedBox(
-                          height: 200,
-                          child: Center(
-                            child: SizedBox(
-                                height: 35,
-                                width: 35,
-                                child: Image.asset(Images.spinner,
-                                    fit: BoxFit.fill)),
-                          ),
-                        )
-                      : carSpaController.carSpaTimeSlot.isEmpty &&
-                              carSpaTimeSlotController.dateLoad.value
+        builder: (carSpaTimeSlotController) {
+          return GetBuilder<CarSpaController>(
+            builder: (carSpaController) {
+              return Padding(
+                padding: const EdgeInsets.all(10),
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Select Date',
+                        style: mediumFont(Colors.black),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Bouncing(
+                        onPress: () {
+                          carSpaTimeSlotController.changeDate(
+                              context, carSpaServiceResultData);
+                        },
+                        child: CarSpaShowDate(),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        'Select Time Slot',
+                        style: mediumFont(Colors.black),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      carSpaTimeSlotController.isLoad.value
                           ? SizedBox(
                               height: 200,
                               child: Center(
-                                child: Text(
-                                  "Time Slots are not available..!",
-                                  style: mediumFont(Colors.red),
+                                child: SizedBox(
+                                  height: 35,
+                                  width: 35,
+                                  child: Image.asset(Images.spinner,
+                                      fit: BoxFit.fill),
                                 ),
                               ),
                             )
-                          : const TimeSlotGrid(),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  /*SizedBox(
-                      width: Get.width,
-                      child: Center(
-                        child: ApplyOfferButton(
-                          carSpaServiceResultData: carSpaServiceResultData,
-                        ),
+                          : carSpaController.carSpaTimeSlot.isEmpty &&
+                                  carSpaTimeSlotController.dateLoad.value
+                              ? SizedBox(
+                                  height: 200,
+                                  child: Center(
+                                    child: Text(
+                                      "Time Slots are not available..!",
+                                      style: mediumFont(Colors.red),
+                                    ),
+                                  ),
+                                )
+                              : const TimeSlotGrid(),
+                      const SizedBox(
+                        height: 20,
                       ),
-                    ),*/
-                  CouponApplyWidget(
-                    amount: double.parse(
-                        carSpaController.carSpaAddOnTotal.value.toString()),
-                  ),
-                  GetBuilder<CouponController>(builder: (couponController) {
-                    return couponController.isApplied.value
-                        ? Column(
-                            children: [
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Row(
+                      const PriceDetailsWidget(),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      CouponApplyWidget(
+                        amount: double.parse(
+                            carSpaController.carSpaAddOnTotal.value.toString()),
+                      ),
+                      carSpaController.offerApplicable.value
+                          ? SizedBox(
+                              width: Get.width,
+                              child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Offer Applied',
+                                        style: mediumFont(Colors.green),
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Bouncing(
+                                        onPress: () {
+                                          carSpaController.clearOffer();
+                                        },
+                                        child: Icon(
+                                          Icons.delete,
+                                          color: Colors.red[900],
+                                          size: 20,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
                                   Text(
-                                    (couponController.couponName.value),
+                                    'You have saved ${carSpaController.discount} INR',
                                     style: mediumFont(Colors.black),
-                                  ),
-                                  Text(
-                                    ' coupon is applied..!',
-                                    style: smallFontW600(Colors.green),
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  Bouncing(
-                                      onPress: () {
-                                        couponController.clearValue();
-                                      },
-                                      child: Icon(
-                                        Icons.delete,
-                                        color: Colors.red[900],
-                                        size: 20,
-                                      ))
+                                  )
                                 ],
                               ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              Text(
-                                  'You have saved ${couponController.discount} INR',
-                                  style: smallFontW600(Colors.black))
-                            ],
-                          )
-                        : const SizedBox();
-                  }),
-                  GetBuilder<CouponController>(builder: (couponController) {
-                    return couponController.showDetails.value
-                        ? Column(
-                            children: [
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                'this Coupon will be applicable only for the minimum purchase '
-                                'amount of ${couponController.minAmount.value}',
-                                style: verySmallFontW600(Colors.red),
-                                textAlign: TextAlign.center,
-                              )
-                            ],
-                          )
-                        : const SizedBox();
-                  }),
-                  carSpaController.offerApplicable.value
-                      ? SizedBox(
-                          width: Get.width,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text('Offer Applied',
-                                      style: mediumFont(Colors.green)),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  Bouncing(
-                                      onPress: () {
-                                        carSpaController.clearOffer();
-                                      },
-                                      child: Icon(
-                                        Icons.delete,
-                                        color: Colors.red[900],
-                                        size: 20,
-                                      ))
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                'You have saved ${carSpaController.discount} INR',
-                                style: mediumFont(Colors.black),
-                              )
-                            ],
-                          ),
-                        )
-                      : const SizedBox()
-                ],
-              ),
-            ),
+                            )
+                          : const SizedBox()
+                    ],
+                  ),
+                ),
+              );
+            },
           );
-        });
-      }),
-      bottomNavigationBar: BottomAppBar(
-        height: 120,
-        elevation: 0,
-        color: Theme.of(context).colorScheme.background,
-        child: CarSpaBottomAppBar(),
+        },
       ),
+      bottomNavigationBar: CarSpaBottomAppBar(),
+      // bottomNavigationBar: BottomAppBar(
+      //   height: 120,
+      //   elevation: 0,
+      //   color: Theme.of(context).colorScheme.background,
+      //   child: CarSpaBottomAppBar(),
+      // ),
     );
   }
 }
@@ -304,6 +251,7 @@ class CouponApplyWidget extends StatelessWidget {
                         Wrap(
                           alignment: WrapAlignment.center,
                           direction: Axis.horizontal,
+                          crossAxisAlignment: WrapCrossAlignment.center,
                           children: [
                             Text(
                               (couponController.couponName.value),
@@ -342,5 +290,136 @@ class CouponApplyWidget extends StatelessWidget {
         );
       },
     );
+  }
+}
+
+class PriceDetailsWidget extends StatelessWidget {
+  const PriceDetailsWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<CarSpaController>(builder: (carSpaController) {
+      return GetBuilder<ProductCategoryController>(
+          builder: (productCategoryController) {
+        return GetBuilder<CouponController>(builder: (couponController) {
+          return Container(
+            // width: double.infinity,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 5,
+                  blurRadius: 7,
+                  offset: const Offset(0, 3), // changes position of shadow
+                ),
+              ],
+            ),
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Price Details',
+                  style: defaultFont(
+                    color: Colors.black,
+                    size: 15,
+                    weight: FontWeight.w400,
+                  ),
+                ),
+                const Divider(
+                  color: Colors.black,
+                ),
+                Row(
+                  children: [
+                    const Text('Price (1 item)'),
+                    const Spacer(),
+                    Text(
+                      PriceConverter.priceToDecimal(
+                        carSpaController.carSpaAddOnTotal.toString(),
+                      ),
+                    ),
+                  ],
+                ),
+                // SizedBox(
+                //   // height: 30,
+                //   child: ListView.separated(
+                //     itemCount: carSpaController.carSpaAddOns.length,
+                //     shrinkWrap: true,
+                //     // physics: NeverScrollableScrollPhysics(),
+                //     itemBuilder: (BuildContext context, int index) {
+                //       return Row(
+                //         mainAxisAlignment: MainAxisAlignment.center,
+                //         children: [
+                //           Text(carSpaController.carSpaAddOns[index]['name']
+                //               .toString()),
+                //           const Spacer(),
+                //           Text(carSpaController.carSpaAddOns[index]['price']
+                //               .toString()),
+                //         ],
+                //       );
+                //     },
+                //     separatorBuilder: (context, index) {
+                //       return const Divider(
+                //         color: Colors.black,
+                //       );
+                //     },
+                //   ),
+                // ),
+                // Row(
+                //   children: [
+                //     const Text('Offer Price'),
+                //     const Spacer(),
+                //     Text(PriceConverter.priceToDecimal(product.offerPrice))
+                //     //product.offerPrice.toString() + '.00')
+                //   ],
+                // ),
+                // Row(
+                //   children: [
+                //     const Text('Discount'),
+                //     const Spacer(),
+                //     Text(PriceConverter.priceToDecimal(
+                //         product.price! - product.offerPrice!))
+                //   ],
+                // ),
+                // Row(
+                //   children: [
+                //     const Text('Delivery Charge'),
+                //     const Spacer(),
+                //     Text(PriceConverter.priceToDecimal(
+                //         productCategoryController.buyNowShipping.value))
+                //   ],
+                // ),
+
+                couponController.isApplied.value
+                    ? Row(
+                        children: [
+                          const Text('Coupon Discount'),
+                          const Spacer(),
+                          Text(couponController.discount.toString())
+                        ],
+                      )
+                    : const SizedBox(),
+                const Divider(
+                  color: Colors.black,
+                ),
+                Row(
+                  children: [
+                    const Text('Total'),
+                    const Spacer(),
+                    couponController.isApplied.isTrue
+                        ? Text(PriceConverter.priceToDecimal(
+                            couponController.finalAmount))
+                        : Text(PriceConverter.priceToDecimal(
+                            carSpaController.carSpaAddOnTotal))
+                  ],
+                )
+              ],
+            ),
+          );
+        });
+      });
+    });
   }
 }

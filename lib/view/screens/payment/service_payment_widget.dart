@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:shoppe_customer/controller/myController/carSpaController.dart';
+import 'package:shoppe_customer/controller/myController/carSpaTimeSlotController.dart';
 import 'package:shoppe_customer/controller/myController/connectivityController.dart';
+import 'package:shoppe_customer/controller/myController/couponController.dart';
 import 'package:shoppe_customer/controller/myController/locationPermissionController.dart';
 import 'package:shoppe_customer/controller/myController/authFactorController.dart';
 import 'package:shoppe_customer/controller/myController/mechanicalController.dart';
@@ -28,6 +30,7 @@ class _ServicePaymentWidgetState extends State<ServicePaymentWidget> {
   var timeSlot = Get.find<ServiceCheckOutController>().timeSlot.value;
   var categoryId = Get.find<ServiceCheckOutController>().serviceId.value;
   var data = Get.find<locationPermissionController>().currentPosition;
+  final couponController = Get.find<CouponController>();
 
   @override
   void initState() {
@@ -85,7 +88,9 @@ class _ServicePaymentWidgetState extends State<ServicePaymentWidget> {
       if (value) {
         var options = {
           'key': key,
-          'amount': paymentController.result[0].amount,
+          'amount': couponController.isApplied.isTrue
+              ? couponController.finalAmount.value
+              : paymentController.result[0].amount,
           'name': 'Pexa',
           'description': '360° Car Care',
           'prefill': {

@@ -35,9 +35,9 @@ class CouponController extends GetxController implements GetxService {
       update();
     }
 
-    if (controller.value.text != '') {
-      var response =
-          await couponApi.checkCoupon(amount, controller.value.text.toString());
+    if (controller.value.text.trim() != '') {
+      var response = await couponApi.checkCoupon(
+          amount, controller.value.text.trim().toString());
 
       if (response != null) {
         if (response['resultData'] != null) {

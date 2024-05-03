@@ -6,7 +6,7 @@ import 'package:shoppe_customer/controller/myController/categoryController.dart'
 import 'package:shoppe_customer/controller/myController/locationPermissionController.dart';
 import 'package:shoppe_customer/controller/myController/notificationController.dart';
 import 'package:shoppe_customer/controller/myController/packageOfferController.dart';
-import 'package:shoppe_customer/data/models/notification_body.dart';
+import 'package:shoppe_customer/data/models/notification_hive/notification_body.dart';
 import 'package:shoppe_customer/helper/route_helper.dart';
 import 'package:shoppe_customer/util/dimensions.dart';
 import 'package:shoppe_customer/util/images.dart';

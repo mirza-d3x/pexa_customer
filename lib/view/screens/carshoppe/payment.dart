@@ -677,3 +677,17 @@ class _ShoppePaymentState extends State<ShoppePayment> {
     );
   }
 }
+
+
+class PriceDetailsWidget
+
+ extends StatelessWidget {
+  const PriceDetailsWidget
+  
+  ({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
+}
