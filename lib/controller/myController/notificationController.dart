@@ -9,8 +9,9 @@ import 'package:shoppe_customer/controller/myController/orderController.dart';
 import 'package:shoppe_customer/controller/tab_controller.dart';
 import 'package:shoppe_customer/helper/date_converter.dart';
 import 'package:shoppe_customer/helper/enums.dart';
+import 'package:shoppe_customer/helper/hive_helper.dart';
 import 'package:shoppe_customer/helper/route_helper.dart';
-import 'package:shoppe_customer/data/models/notification_body.dart';
+import 'package:shoppe_customer/data/models/notification_hive/notification_body.dart';
 import 'package:shoppe_customer/data/models/notification_model/notification_model.dart';
 
 class NotificationController extends GetxController implements GetxService {
@@ -23,7 +24,9 @@ class NotificationController extends GetxController implements GetxService {
   List<NotificationModel>? _notificationList;
   final bool _hasNotification = false;
 
-  NotificationController({required this.notificationAPI});
+  NotificationController({required this.notificationAPI}) {
+    registerAdapter();
+  }
   List<NotificationModel>? get notificationList => _notificationList;
   bool get hasNotification => _hasNotification;
 
@@ -32,6 +35,10 @@ class NotificationController extends GetxController implements GetxService {
   setBottomNavSelectedPage(int pageNo) {
     bottomNavSelectedPage = pageNo;
     update();
+  }
+
+  void registerAdapter() {
+    HiveHelper().registerAdapters(NotificationBodyAdapter());
   }
 
   Future initializeNotification() async {
@@ -93,6 +100,11 @@ class NotificationController extends GetxController implements GetxService {
       update();
     }
     return _notificationList!.length;
+  }
+
+  getNotificationFromLocal() async {
+    var response = await HiveHelper().getAllData('notifications');
+    log(response.toString());
   }
 
   Future setSeenNotification(List<String?> idList) async {

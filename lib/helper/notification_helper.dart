@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -9,12 +10,18 @@ import 'package:http/http.dart' as http;
 import 'package:shoppe_customer/controller/myController/notificationController.dart';
 import 'package:shoppe_customer/controller/myController/orderController.dart';
 import 'package:shoppe_customer/helper/enums.dart';
+import 'package:shoppe_customer/helper/hive_helper.dart';
 import 'package:shoppe_customer/helper/route_helper.dart';
 import 'package:shoppe_customer/data/models/carShoppe/shoppeOrdersModel.dart';
-import 'package:shoppe_customer/data/models/notification_body.dart';
+import 'package:shoppe_customer/data/models/notification_hive/notification_body.dart';
 import 'package:shoppe_customer/data/models/service_order_model.dart';
 
 class NotificationHelper {
+  static void saveNotification(NotificationBody notification) async {
+    await HiveHelper().saveData('notifications', notification);
+    log("Notification Saved");
+  }
+
   void requestIOSPermissions(
       FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) {
     flutterLocalNotificationsPlugin
@@ -36,8 +43,8 @@ class NotificationHelper {
       requestBadgePermission: false,
       requestAlertPermission: false,
     );
-    var initializationsSettings = InitializationSettings(
-        android: androidInitialize, iOS: iOSInitialize);
+    var initializationsSettings =
+        InitializationSettings(android: androidInitialize, iOS: iOSInitialize);
 
 // when app is closed
     final details =
@@ -76,8 +83,7 @@ class NotificationHelper {
     //     await FirebaseMessaging.instance.getToken();
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print(
-          "onMessage: ${message.notification!.title}/${message.notification!.body}/${message.data}");
+      log("onMessage: ${message.notification!.title}/${message.notification!.body}/${message.data}");
       NotificationHelper.showNotification(
           message, flutterLocalNotificationsPlugin, true);
 
@@ -86,21 +92,25 @@ class NotificationHelper {
       Get.find<NotificationController>().loadForeGroundOrderDetails(
           orderId: notificationBody.orderDocId,
           category: notificationBody.serviceType);
+      saveNotification(notificationBody);
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      print(
-          "onOpenApp: ${message.notification!.title}/${message.notification!.body}/${message.notification!.titleLocKey}");
+      log("onOpenApp: ${message.notification!.title}/${message.notification!.body}/${message.notification!.titleLocKey}");
       try {
-        if (message.data != null || message.data.isNotEmpty) {
+        if (message.data.isNotEmpty) {
           NotificationBody notificationBody0 =
               convertNotification(message.data);
           if (notificationBody0.notificationType == NotificationType.order) {
-            print('order call-------------');
+            log('order call-------------');
             navigate(notificationBody0);
           }
+          saveNotification(notificationBody0);
         }
-      } catch (e) {}
+      } catch (error, stackTrace) {
+        log("Error while opening Notification",
+            error: error, stackTrace: stackTrace);
+      }
     });
   }
 
@@ -182,9 +192,7 @@ class NotificationHelper {
         iOS: appleNotificationDetails,
         macOS: appleNotificationDetails);
     await fln.show(0, title, body, platformChannelSpecifics,
-        payload: notificationBody != null
-            ? jsonEncode(notificationBody.toJson())
-            : null);
+        payload: jsonEncode(notificationBody.toJson()));
   }
 
   static Future<void> showBigTextNotification(
@@ -220,9 +228,7 @@ class NotificationHelper {
         iOS: appleNotificationDetails,
         macOS: appleNotificationDetails);
     await fln.show(0, title, body, platformChannelSpecifics,
-        payload: notificationBody != null
-            ? jsonEncode(notificationBody.toJson())
-            : null);
+        payload: jsonEncode(notificationBody.toJson()));
   }
 
   static Future<void> showBigPictureNotificationHiddenLargeIcon(
@@ -267,9 +273,7 @@ class NotificationHelper {
         iOS: appleNotificationDetails,
         macOS: appleNotificationDetails);
     await fln.show(0, title, body, platformChannelSpecifics,
-        payload: notificationBody != null
-            ? jsonEncode(notificationBody.toJson())
-            : null);
+        payload: jsonEncode(notificationBody.toJson()));
   }
 
   static Future<String> _downloadAndSaveFile(
@@ -393,13 +397,11 @@ class NotificationHelper {
         });
         break;
       case null:
-        // TODO: Handle this case.
     }
   }
 }
 
 Future<dynamic> myBackgroundMessageHandler(RemoteMessage message) async {
-  print(
-      "onBackground: ${message.notification!.title}/${message.notification!.body}/${message.notification!.titleLocKey}");
+  log("onBackground: ${message.notification!.title}/${message.notification!.body}/${message.notification!.titleLocKey}");
   Get.find<NotificationController>().addBackgroundNotifications(message);
 }

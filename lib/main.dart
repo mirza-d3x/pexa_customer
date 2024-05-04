@@ -9,6 +9,7 @@ import 'package:shoppe_customer/data/api/firebase_api.dart';
 import 'package:shoppe_customer/firebase_options.dart';
 import 'package:shoppe_customer/helper/app_life_state.dart';
 import 'package:shoppe_customer/helper/dynamiclink_helper.dart';
+import 'package:shoppe_customer/helper/hive_helper.dart';
 import 'package:shoppe_customer/helper/notification_helper.dart';
 import 'package:shoppe_customer/helper/responsive_helper.dart';
 import 'package:shoppe_customer/helper/route_helper.dart';
@@ -37,7 +38,7 @@ Future<void> main() async {
   }
   setPathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
-
+  await HiveHelper().initHive();
   Map<String, Map<String, String>> languages = await di.init();
   await GetStorage.init();
 ///////
@@ -77,15 +78,15 @@ Future<void> main() async {
   //     .then((_) {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    home: LifeCycle(child: MyApp(languages: languages, productId: id)),
+    home: LifeCycle(child: PexaApp(languages: languages, productId: id)),
   ));
   // });
 }
 
-class MyApp extends StatelessWidget {
+class PexaApp extends StatelessWidget {
   final Map<String, Map<String, String>>? languages;
   final String? productId;
-  const MyApp({super.key, this.languages, this.productId});
+  const PexaApp({super.key, this.languages, this.productId});
 
   @override
   Widget build(BuildContext context) {

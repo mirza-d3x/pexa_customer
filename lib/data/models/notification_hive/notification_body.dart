@@ -1,33 +1,60 @@
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shoppe_customer/helper/enums.dart';
 
-class NotificationBody {
+part 'notification_body.g.dart';
+
+@HiveType(typeId: 1)
+class NotificationBody extends HiveObject {
+  @HiveField(0)
   NotificationType? notificationType;
+
+  @HiveField(1)
   String? orderDocId;
+
+  @HiveField(2)
   String? orderId;
+
+  @HiveField(3)
   String? serviceName;
+
+  @HiveField(4)
   MainCategory? serviceType;
+
+  @HiveField(5)
   String? happyCode;
+
+  @HiveField(6)
   String? productName;
-  String? ServiceTypeString;
+
+  @HiveField(7)
+  String? serviceTypeString;
+
+  @HiveField(8)
   String? notificationTypeString;
 
-  NotificationBody(
-      {this.notificationType,
-      this.orderId,
-      this.orderDocId,
-      this.serviceName,
-      this.serviceType,
-      this.happyCode,
-      this.productName});
+  NotificationBody({
+    required this.notificationType,
+    required this.orderId,
+    required this.orderDocId,
+    required this.serviceName,
+    required this.serviceType,
+    required this.happyCode,
+    required this.productName,
+  }) {
+    notificationTypeString = notificationType.toString();
+    serviceTypeString = serviceType.toString();
+  }
 
-  NotificationBody.fromJson(Map<String, dynamic> json) {
-    notificationType = convertToEnum(json['eventType']);
-    orderId = json['orderId'] ?? "";
-    orderDocId = json['_id'] ?? "";
-    serviceName = json['serviceName'] ?? "";
-    serviceType = convertCategoryToEnum(json['assetType']);
-    happyCode = json['happyCode'] ?? "";
-    productName = json['productName'] ?? "";
+  factory NotificationBody.fromJson(Map<String, dynamic> json) {
+    return NotificationBody(
+      notificationType: convertToEnum(json['eventType']),
+      orderId: json['orderId'] ?? "",
+      orderDocId: json['_id'] ?? "",
+      serviceName: json['serviceName'] ?? "",
+      serviceType: convertCategoryToEnum(json['assetType']),
+      happyCode: json['happyCode'] ?? "",
+      productName: json['productName'] ?? "",
+    );
   }
 
   Map<String, dynamic> toJson() {
@@ -36,14 +63,13 @@ class NotificationBody {
     data['orderId'] = orderId;
     data['_id'] = orderDocId;
     data['serviceName'] = serviceName;
-    data['assetType'] = ServiceTypeString;
+    data['assetType'] = serviceTypeString;
     data['happyCode'] = happyCode;
     data['productName'] = productName;
     return data;
   }
 
-  NotificationType convertToEnum(String? enumString) {
-    notificationTypeString = enumString;
+  static NotificationType convertToEnum(String? enumString) {
     if (enumString == "happy-code-generated") {
       return NotificationType.happyCode;
     } else if (enumString == 'order-in-progress' ||
@@ -58,8 +84,7 @@ class NotificationBody {
     return NotificationType.general;
   }
 
-  MainCategory convertCategoryToEnum(String? enumString) {
-    ServiceTypeString = enumString;
+  static MainCategory convertCategoryToEnum(String? enumString) {
     if (enumString == 'Carspa') {
       return MainCategory.CARSPA;
     } else if (enumString == 'Mechanical') {
