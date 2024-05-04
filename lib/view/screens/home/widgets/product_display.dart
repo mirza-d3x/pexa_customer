@@ -19,18 +19,24 @@ class HomeProducts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: MediaQuery.of(context).size.width,
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        child:
-            // categoryModelController.exploreSection();
-            GetBuilder<ProductCategoryController>(
-                builder: (categoryModelController) {
+      width: MediaQuery.of(context).size.width,
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child:
+          // categoryModelController.exploreSection();
+          GetBuilder<ProductCategoryController>(
+        builder: (categoryModelController) {
           return Column(
             children: [
               const PexaService(),
-              const SizedBox(height: 10,),
-              const PexaServiceRound(type: 'carSpa',),
-              const SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
+              const PexaServiceRound(
+                type: 'carSpa',
+              ),
+              const SizedBox(
+                height: 10,
+              ),
               offeredProductWidget(categoryModelController),
               const SizedBox(
                 height: 10,
@@ -39,17 +45,23 @@ class HomeProducts extends StatelessWidget {
               const SizedBox(
                 height: Dimensions.PADDING_SIZE_SMALL,
               ),
-             /* exploreListWidget(),*/
+              /* exploreListWidget(),*/
               const SizedBox(
                 height: 10,
               ),
               const ClientsTestimonial(),
-              const SizedBox(height: 20,),
+              const SizedBox(
+                height: 20,
+              ),
               const VideoPlaying(),
-              const SizedBox(height: 20,),
+              const SizedBox(
+                height: 20,
+              ),
             ],
           );
-        }));
+        },
+      ),
+    );
   }
 
   Column exploreListWidget() {
@@ -59,7 +71,7 @@ class HomeProducts extends StatelessWidget {
         const SizedBox(
           height: 10,
         ),
-        Container(child: Explore()),
+        Explore(),
       ],
     );
   }
@@ -73,21 +85,23 @@ class HomeProducts extends StatelessWidget {
             ? TitleData(
                 title: 'Offered Products',
                 onTap: () {
-                  Get.toNamed(RouteHelper.viewAllProducts, arguments: [
-                    {
-                      'title': 'Offered Products',
-                      'data': categoryModelController.offered,
-                      'type': 'offered'
-                    }
-                  ]);
-                })
+                  Get.toNamed(
+                    RouteHelper.viewAllProducts,
+                    arguments: [
+                      {
+                        'title': 'Offered Products',
+                        'data': categoryModelController.offered,
+                        'type': 'offered'
+                      }
+                    ],
+                  );
+                },
+              )
             : const TitleData(title: 'Offered Products'),
         const SizedBox(
           height: 10,
         ),
-        Container(
-          child: const FeaturedProducts(type: 'offered'),
-        ),
+        FeaturedProducts(type: 'offered'),
       ],
     );
   }
@@ -101,21 +115,23 @@ class HomeProducts extends StatelessWidget {
             ? TitleData(
                 title: 'Featured Products',
                 onTap: () {
-                  Get.toNamed(RouteHelper.viewAllProducts, arguments: [
-                    {
-                      'title': 'Featured Products',
-                      'data': categoryModelController.featured,
-                      'type': 'feature'
-                    }
-                  ]);
-                })
+                  Get.toNamed(
+                    RouteHelper.viewAllProducts,
+                    arguments: [
+                      {
+                        'title': 'Featured Products',
+                        'data': categoryModelController.featured,
+                        'type': 'feature'
+                      }
+                    ],
+                  );
+                },
+              )
             : const TitleData(title: 'Featured Products'),
         const SizedBox(
           height: 10,
         ),
-        Container(
-          child: const FeaturedProducts(type: 'feature'),
-        ),
+        FeaturedProducts(type: 'feature'),
       ],
     );
   }

@@ -18,10 +18,16 @@ class TitleData extends StatelessWidget {
           )),
       (onTap != null)
           ? InkWell(
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ViewAllProduct(),));
-    },
-    /*onTap as void Function()?,*/
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ViewAllProduct(
+                        type: 'offered',
+                      ),
+                    ));
+              },
+              /*onTap as void Function()?,*/
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(10, 5, 0, 5),
                 child: Text(

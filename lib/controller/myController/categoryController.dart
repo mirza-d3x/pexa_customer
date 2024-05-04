@@ -47,8 +47,7 @@ class ProductCategoryController extends GetxController implements GetxService {
   final ProductAPI productAPI;
   final OrderApi orderApi;
   LoaderHelper loaderHelper = LoaderHelper();
-  ProductCategoryController(
-      {required this.orderApi, required this.productAPI});
+  ProductCategoryController({required this.orderApi, required this.productAPI});
 
   @override
   void onInit() {
@@ -87,7 +86,9 @@ class ProductCategoryController extends GetxController implements GetxService {
     var randomCarspa = [];
     var randomMechanical = [];
     var randomQuickHelp = [];
-    if (exploreList.where((element) => element.assetType == "Carspa").isNotEmpty) {
+    if (exploreList
+        .where((element) => element.assetType == "Carspa")
+        .isNotEmpty) {
       for (var i = 0; i < 2; i++) {
         var a = Random().nextInt(exploreList
             .where((element) => element.assetType == "Carspa")
@@ -108,7 +109,8 @@ class ProductCategoryController extends GetxController implements GetxService {
       update();
     }
     if (exploreList
-            .where((element) => element.assetType == "Mechanical").isNotEmpty) {
+        .where((element) => element.assetType == "Mechanical")
+        .isNotEmpty) {
       for (var i = 0; i < 2; i++) {
         randomMechanical.add(exploreList
                 .where((element) => element.assetType == "Mechanical")
@@ -129,7 +131,8 @@ class ProductCategoryController extends GetxController implements GetxService {
       update();
     }
     if (exploreList
-            .where((element) => element.assetType == "Quickhelp").isNotEmpty) {
+        .where((element) => element.assetType == "Quickhelp")
+        .isNotEmpty) {
       for (var i = 0; i < 2; i++) {
         randomQuickHelp.add(exploreList
                 .where((element) => element.assetType == "Quickhelp")
@@ -199,11 +202,11 @@ class ProductCategoryController extends GetxController implements GetxService {
       featured = FeaturedProducts.fromJson(response.body);
       featured!.resultData!.shuffle();
       update();
-        } else if (type == 'offered') {
+    } else if (type == 'offered') {
       offered = FeaturedProducts.fromJson(response.body);
       offered!.resultData!.shuffle();
       update();
-        }
+    }
     loaderHelper.cancelLoader();
     update();
   }
@@ -245,7 +248,7 @@ class ProductCategoryController extends GetxController implements GetxService {
     }
     allProdAvailable.value = false;
 
-    update();
+    // update();
     Response response = await (productAPI.getAllProductList(page));
     ProductListModel productListResponse =
         productListModelFromJson(response.bodyString!);
@@ -258,8 +261,8 @@ class ProductCategoryController extends GetxController implements GetxService {
     if (page == '1') {
       allProductListTemp.shuffle();
     }
-    update();
-      if (allProductList.isEmpty) {
+    // update();
+    if (allProductList.isEmpty) {
       allProdAvailable.value = true;
       update();
     } else {

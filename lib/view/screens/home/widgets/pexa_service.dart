@@ -59,8 +59,7 @@ class _PexaServiceState extends State<PexaService> {
   ];
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<AuthFactorsController>(builder: (authController)
-    {
+    return GetBuilder<AuthFactorsController>(builder: (authController) {
       return Column(children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -100,8 +99,7 @@ class _PexaServiceState extends State<PexaService> {
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,
             itemBuilder: (context, index) {
-              return GetBuilder<CarSpaController>(builder: (carSpaController)
-              {
+              return GetBuilder<CarSpaController>(builder: (carSpaController) {
                 return GestureDetector(
                   onTap: () {
                     /* if (!authController.isMIdAvailable) {
@@ -179,9 +177,11 @@ class _PexaServiceState extends State<PexaService> {
                 )
                 );*/
 
-                    carSpaController.getCarSpaServiceWithCatId(carSpaController.carSpaCategory[index].id);
-                    Get.toNamed(RouteHelper.carSpaService,
-                        arguments: {'title': carSpaController.carSpaCategory[index].name});
+                    carSpaController.getCarSpaServiceWithCatId(
+                        carSpaController.carSpaCategory[index].id);
+                    Get.toNamed(RouteHelper.carSpaService, arguments: {
+                      'title': carSpaController.carSpaCategory[index].name
+                    });
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(3),
@@ -191,19 +191,17 @@ class _PexaServiceState extends State<PexaService> {
                         width: 80,
                         decoration: BoxDecoration(
                             image: DecorationImage(
-                                image:
-                                AssetImage(
+                                image: AssetImage(
                                     CarWashServicee[index].serviceImage))),
-                        child: Image.asset(
-                            "assets/serviceImage/BottomiMAGE.png"),
+                        child:
+                            Image.asset("assets/serviceImage/BottomiMAGE.png"),
                       ),
                       Positioned(
                         bottom: 10,
                         left: 6,
-
                         child: Text(
                           CarWashServicee[index].serviceName,
-                          style: veryverySmallFontW600(Colors.white),
+                          style: veryverySmallFontW600(Colors.black),
                         ),
                       ),
                     ]),

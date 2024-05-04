@@ -1030,9 +1030,7 @@ class ShoppeListing extends StatelessWidget {
         const SizedBox(
           height: 10,
         ),
-        Container(
-          child: const FeaturedProducts(type: 'offered'),
-        ),
+        FeaturedProducts(type: 'offered'),
       ],
     );
   }
@@ -1059,7 +1057,7 @@ class ShoppeListing extends StatelessWidget {
           height: 10,
         ),
         Container(
-          child: const FeaturedProducts(type: 'feature'),
+          child: FeaturedProducts(type: 'feature'),
         ),
       ],
     );

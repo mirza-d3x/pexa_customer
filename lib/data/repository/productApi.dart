@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:shoppe_customer/data/api/api_client.dart';
 import 'package:shoppe_customer/data/models/carShoppe/productListModel.dart';
 import 'package:shoppe_customer/data/models/carShoppe/shoppeOrdersModel.dart';
@@ -51,7 +52,8 @@ class ProductAPI extends GetxService {
     );
   }
 
-  Future getProductByCategory(String? categoryId, String page, List data) async {
+  Future getProductByCategory(
+      String? categoryId, String page, List data) async {
     return await apiClient.postData(
         uri: AppConstants.FETCH_PRODUCT_BY_CATEGORY + page,
         body: <String, dynamic>{"category_id": categoryId, "location": data});
@@ -143,6 +145,7 @@ class ProductAPI extends GetxService {
     try {
       final response =
           await apiClient.postData(uri: AppConstants.ORDER_NOW, body: body);
+      log("Status Code: ${response.statusCode} Response: ${response.body}");
       if (response.statusCode == 200 || response.statusCode == 201) {
         var json = response.bodyString!;
         return jsonDecode(json);

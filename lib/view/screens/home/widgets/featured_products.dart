@@ -5,12 +5,11 @@ import 'package:shoppe_customer/view/base/single_product_shimmer.dart';
 import 'package:shoppe_customer/view/screens/home/widgets/grid_featured.dart';
 
 class FeaturedProducts extends StatelessWidget {
-  const FeaturedProducts({super.key, required this.type});
+  FeaturedProducts({super.key, required this.type});
   final String type;
-
+  final categoryModelController = Get.find<ProductCategoryController>();
   @override
   Widget build(BuildContext context) {
-    final categoryModelController = Get.find<ProductCategoryController>();
     var height = MediaQuery.of(context).size.height;
     return SizedBox(
       height: 170,
@@ -20,20 +19,20 @@ class FeaturedProducts extends StatelessWidget {
         shrinkWrap: true,
         itemCount: type == 'offered'
             ? categoryModelController.offered != null
-            ? categoryModelController.offered!.resultData!.length > 12
-            ? 12
-            : categoryModelController.offered!.resultData!.length
-            : 12
+                ? categoryModelController.offered!.resultData!.length > 12
+                    ? 12
+                    : categoryModelController.offered!.resultData!.length
+                : 12
             : categoryModelController.featured != null
-            ? categoryModelController.featured!.resultData!.length > 6
-            ? 6
-            : categoryModelController.featured!.resultData!.length
-            : 6,
+                ? categoryModelController.featured!.resultData!.length > 6
+                    ? 6
+                    : categoryModelController.featured!.resultData!.length
+                : 6,
         itemBuilder: (context, index) {
           return Padding(
               padding: const EdgeInsets.all(4),
-              child:  Container(
-                height:130,
+              child: Container(
+                height: 130,
                 width: 100,
                 margin: const EdgeInsets.all(5),
                 clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -41,23 +40,22 @@ class FeaturedProducts extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                   color: Colors.white,
                 ),
-                child: type == 'offered' &&
-                    categoryModelController.offered != null
-                    ? FeaturedTile(
-                  type: type,
-                  index: index,
-                )
-                    : type == 'feature' &&
-                    categoryModelController.featured != null
-                    ? FeaturedTile(
-                  type: type,
-                  index: index,
-                )
-                    : const SingleProductShimmer(),
-              )
-          );
-        },),
-
+                child:
+                    type == 'offered' && categoryModelController.offered != null
+                        ? FeaturedTile(
+                            type: type,
+                            index: index,
+                          )
+                        : type == 'feature' &&
+                                categoryModelController.featured != null
+                            ? FeaturedTile(
+                                type: type,
+                                index: index,
+                              )
+                            : const SingleProductShimmer(),
+              ));
+        },
+      ),
     );
 
     /*CustomScrollView(
@@ -114,6 +112,5 @@ class FeaturedProducts extends StatelessWidget {
             ),
           ),
         ]);*/
-
   }
 }
