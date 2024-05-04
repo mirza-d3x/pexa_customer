@@ -1,5 +1,3 @@
-import 'package:flutter/widgets.dart';
-import 'package:shoppe_customer/controller/myController/buy_now_controller.dart';
 import 'package:shoppe_customer/controller/myController/categoryController.dart';
 import 'package:shoppe_customer/data/models/service_model.dart';
 import 'package:shoppe_customer/helper/fonts.dart';

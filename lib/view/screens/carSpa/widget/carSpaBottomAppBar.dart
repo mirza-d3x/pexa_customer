@@ -38,37 +38,37 @@ class CarSpaBottomAppBar extends StatelessWidget {
       child: Row(
         children: [
           Expanded(child: CarSpaPaymentChooserWidget()),
-          Expanded(
-            child: GetBuilder<CouponController>(builder: (context) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "total",
-                    style: smallFontW600(Colors.black),
-                  ),
-                  Row(
-                    children: [
-                      couponController.isApplied.isTrue
-                          ? Text(
-                              "₹  ${couponController.finalAmount.toString()}",
-                              style: largeFont(Colors.black),
-                            )
-                          : Text(
-                              "₹  ${carSpaController.carSpaAddOnTotal.toString()}",
-                              style: largeFont(Colors.black),
-                            ),
-                      Text(
-                        " (inc. tax)",
-                        style: smallFont(Colors.black),
-                      ),
-                    ],
-                  )
-                ],
-              );
-            }),
-          ),
+          // Expanded(
+          //   child: GetBuilder<CouponController>(builder: (context) {
+          //     return Column(
+          //       crossAxisAlignment: CrossAxisAlignment.start,
+          //       mainAxisAlignment: MainAxisAlignment.center,
+          //       children: [
+          //         Text(
+          //           "total",
+          //           style: smallFontW600(Colors.black),
+          //         ),
+          //         Row(
+          //           children: [
+          //             couponController.isApplied.isTrue
+          //                 ? Text(
+          //                     "₹  ${couponController.finalAmount.toString()}",
+          //                     style: largeFont(Colors.black),
+          //                   )
+          //                 : Text(
+          //                     "₹  ${carSpaController.carSpaAddOnTotal.toString()}",
+          //                     style: largeFont(Colors.black),
+          //                   ),
+          //             Text(
+          //               " (inc. tax)",
+          //               style: smallFont(Colors.black),
+          //             ),
+          //           ],
+          //         )
+          //       ],
+          //     );
+          //   }),
+          // ),
           const SizedBox(
             width: 10,
           ),
