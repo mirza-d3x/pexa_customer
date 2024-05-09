@@ -3,7 +3,7 @@ description: Pexa.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 
-version: 4.0.0+1
+version: 4.0.1+72
 
 environment:
   sdk: '>=3.3.1 <4.0.0'
