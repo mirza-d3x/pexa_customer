@@ -31,8 +31,8 @@ class ProductOrderDetailedView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DateTime expectedDateOfDelivery =
-        DateConverter.expectedDeliveryDate(shoppeOrderResultData!.createdAt!);
+    DateTime expectedDateOfDelivery = DateConverter.expectedDeliveryDate(
+        shoppeOrderResultData!.createdAt ?? DateTime.now());
     return Scaffold(
       appBar: const CustomAppBar(
         title: 'Order Details',
@@ -46,7 +46,8 @@ class ProductOrderDetailedView extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -100,7 +101,7 @@ class ProductOrderDetailedView extends StatelessWidget {
                                                 .item!.itemId!.imageUrl !=
                                             null &&
                                         shoppeOrderResultData!
-                                                .item!.itemId!.imageUrl!.isNotEmpty
+                                            .item!.itemId!.imageUrl!.isNotEmpty
                                     ? shoppeOrderResultData!
                                         .item!.itemId!.imageUrl![0]
                                     : '',
@@ -121,7 +122,8 @@ class ProductOrderDetailedView extends StatelessWidget {
                                 SizedBox(
                                     width: 200,
                                     child: Text(
-                                        shoppeOrderResultData!.item!.itemId!.name!
+                                        shoppeOrderResultData!
+                                            .item!.itemId!.name!
                                             .toUpperCase(),
                                         maxLines: 3,
                                         overflow: TextOverflow.ellipsis,
@@ -224,7 +226,8 @@ class ProductOrderDetailedView extends StatelessWidget {
                                                 weight: FontWeight.w500),
                                           ),
                                           Text(
-                                            shoppeOrderResultData!.discountAmount
+                                            shoppeOrderResultData!
+                                                .discountAmount
                                                 .toString(),
                                             style: smallFont(Colors.black),
                                           )
@@ -354,7 +357,8 @@ class ProductOrderDetailedView extends StatelessWidget {
                           BoxShadow(
                             color: Colors.grey.withOpacity(0.5),
                             blurRadius: 7,
-                            offset: const Offset(0, 3), // changes position of shadow
+                            offset: const Offset(
+                                0, 3), // changes position of shadow
                           ),
                         ],
                       ),

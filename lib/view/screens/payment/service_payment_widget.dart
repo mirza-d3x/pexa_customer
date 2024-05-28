@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
@@ -106,6 +108,10 @@ class _ServicePaymentWidgetState extends State<ServicePaymentWidget> {
         };
 
         try {
+          log((couponController.isApplied.isTrue
+                  ? couponController.finalAmount.value
+                  : paymentController.result[0].amount)
+              .toString());
           print(options);
           _razorpay.open(options);
         } catch (e) {

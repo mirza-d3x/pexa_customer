@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
@@ -27,6 +29,7 @@ class ShoppePayment extends StatefulWidget {
 class _ShoppePaymentState extends State<ShoppePayment> {
   late Razorpay _razorpay;
   var payment = Get.find<PaymentController>();
+  final coupounController = Get.find<CouponController>();
   @override
   void initState() {
     super.initState();
@@ -45,9 +48,8 @@ class _ShoppePaymentState extends State<ShoppePayment> {
   void openCheckout() async {
     String? key;
     if (Get.find<ConnectivityController>().initialDataModel != null) {
-      for (var element in Get.find<ConnectivityController>()
-          .initialDataModel!
-          .resultData!) {
+      for (var element
+          in Get.find<ConnectivityController>().initialDataModel!.resultData!) {
         if (element.type == "rzp_key") {
           key = element.value;
         }
@@ -71,9 +73,14 @@ class _ShoppePaymentState extends State<ShoppePayment> {
             Get.find<BuyNowController>().buyNowQuantity.toString(),
             Get.find<CouponController>().couponName.value)
         .then((value) {
+      log(coupounController.isApplied.value
+          ? coupounController.finalAmount.toString()
+          : payment.result[0].amount);
       var options = {
         'key': key,
-        'amount': payment.result[0].amount,
+        'amount': coupounController.isApplied.value
+            ? payment.result[0].amount
+            : coupounController.finalAmount.toString(),
         'name': 'Pexa',
         'description': '360° Car Care',
         'prefill': {
@@ -87,7 +94,7 @@ class _ShoppePaymentState extends State<ShoppePayment> {
         },
         'order_id': payment.result[0].id,
       };
-
+      log(options.toString());
       try {
         _razorpay.open(options);
       } catch (e) {
@@ -148,8 +155,8 @@ class _ShoppePaymentState extends State<ShoppePayment> {
                               color: Colors.grey.withOpacity(0.5),
                               spreadRadius: 5,
                               blurRadius: 7,
-                              offset:
-                                  const Offset(0, 3), // changes position of shadow
+                              offset: const Offset(
+                                  0, 3), // changes position of shadow
                             ),
                           ]),
                       padding: const EdgeInsets.all(20),
@@ -421,7 +428,8 @@ class _ShoppePaymentState extends State<ShoppePayment> {
                                                 onPressed: () {
                                                   couponController.clearValue();
                                                   buyNowController.buyNowTotal(
-                                                      price: product.offerPrice!,
+                                                      price:
+                                                          product.offerPrice!,
                                                       deliveryCharge:
                                                           productCategoryController
                                                               .buyNowShipping
@@ -459,8 +467,8 @@ class _ShoppePaymentState extends State<ShoppePayment> {
                           ),
                         ],
                       ),
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 10),
                       child: Column(
                         children: [
                           const Row(
@@ -511,7 +519,8 @@ class _ShoppePaymentState extends State<ShoppePayment> {
                                             : Theme.of(context).disabledColor),
                                       ),
                                     ]),
-                                    (product.modes != null && product.modes!.cod!)
+                                    (product.modes != null &&
+                                            product.modes!.cod!)
                                         ? const SizedBox()
                                         : Text(
                                             'Cash on delivery is not available for this product',
@@ -678,13 +687,8 @@ class _ShoppePaymentState extends State<ShoppePayment> {
   }
 }
 
-
-class PriceDetailsWidget
-
- extends StatelessWidget {
-  const PriceDetailsWidget
-  
-  ({super.key});
+class PriceDetailsWidget extends StatelessWidget {
+  const PriceDetailsWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
