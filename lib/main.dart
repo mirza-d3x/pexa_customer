@@ -99,7 +99,7 @@ class PexaApp extends StatelessWidget {
               if (!currentFocus.hasPrimaryFocus) {
                 currentFocus.unfocus();
               }
-            },
+          },
             child: GetMaterialApp(
               navigatorObservers: [FlutterSmartDialog.observer],
               title: AppConstants.APP_NAME,

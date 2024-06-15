@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
@@ -49,6 +51,7 @@ class _ServicePaymentWidgetState extends State<ServicePaymentWidget> {
   }
 
   void openCheckout() async {
+    final couponController = Get.find<CouponController>();
     String? key;
     if (Get.find<ConnectivityController>().initialDataModel != null) {
       for (var element
@@ -83,7 +86,10 @@ class _ServicePaymentWidgetState extends State<ServicePaymentWidget> {
             data: data,
             addOns: addOns,
             timeSlot: timeSlot,
-            mainServiceCategory: widget.mainServiceCategory)
+            mainServiceCategory: widget.mainServiceCategory,
+            couponCode: couponController.isApplied.isTrue
+                ? couponController.couponName.value
+                : null)
         .then((value) {
       if (value) {
         var options = {
@@ -106,6 +112,10 @@ class _ServicePaymentWidgetState extends State<ServicePaymentWidget> {
         };
 
         try {
+          log((couponController.isApplied.isTrue
+                  ? couponController.finalAmount.value
+                  : paymentController.result[0].amount)
+              .toString());
           print(options);
           _razorpay.open(options);
         } catch (e) {

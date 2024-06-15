@@ -62,6 +62,8 @@ class ApiClient extends GetxService {
     late http.Response response;
     try {
       _logger.i('====> API Call: $uri\nHeader: $_mainHeaders');
+      _logger.d(
+          "Request: ${appBaseUrl + uri} \n query: $query \n header: $headers");
       response = await http.get(
         Uri.parse(appBaseUrl + uri),
         headers: headers ?? _mainHeaders,
@@ -79,6 +81,8 @@ class ApiClient extends GetxService {
     try {
       _logger.i('====> API Call: $uri\nHeader: $_mainHeaders');
       _logger.d('====> API Body: $body');
+      _logger
+          .d("Request: ${appBaseUrl + uri} \n body: $body \n header: $headers");
       String encBody = "";
       if (body != null) {
         encBody = jsonEncode(body);
@@ -151,6 +155,8 @@ class ApiClient extends GetxService {
       }
       _logger.i('====> API Call: $uri\nHeader: $_mainHeaders');
       _logger.i('====> API Body: $body');
+      _logger
+          .d("Request: ${appBaseUrl + uri} \n body: $body \n header: $headers");
       response = await http
           .put(
             Uri.parse(appBaseUrl + uri),

@@ -467,7 +467,7 @@ class ProductCategoryController extends GetxController implements GetxService {
       if (response['status'] == "OK") {
         orderId.value = response['resultData']['_id'];
         update();
-        showCustomSnackBar('Order placed...!', title: 'Success', isError: true);
+        showCustomSnackBar('Order placed...!', title: 'Success', isError: false);
         return true;
       } else {
         showCustomSnackBar('Order not placed. Error occured..!',

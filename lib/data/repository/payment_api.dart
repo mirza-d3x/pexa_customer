@@ -56,6 +56,7 @@ class PaymentAPI {
       List? location,
       String? timeSlot,
       MainCategory? mainServiceCategory,
+      String? coupon,
       var addOns}) async {
     print('id : $categoryId \n data : $location \n time : $timeSlot');
     if (mainServiceCategory == MainCategory.QUICKHELP) {
@@ -79,8 +80,12 @@ class PaymentAPI {
           "timeSlot": timeSlot,
         };
       }
-      return await apiClient!.postData(
-          uri: '/carspa-order/razorpay', body: bodyData);
+      if (coupon != null) {
+        bodyData['couponCode'] = coupon;
+      }
+      print(bodyData);
+      return await apiClient!
+          .postData(uri: '/carspa-order/razorpay', body: bodyData);
     }
     if (mainServiceCategory == MainCategory.MECHANICAL) {
       dynamic bodyData;
@@ -98,8 +103,8 @@ class PaymentAPI {
           "timeSlot": timeSlot,
         };
       }
-      return await apiClient!.postData(
-          uri: '/mechanical-order/razorpay', body: bodyData);
+      return await apiClient!
+          .postData(uri: '/mechanical-order/razorpay', body: bodyData);
     } else {
       return const Response(statusText: "Not a service");
     }
@@ -154,7 +159,7 @@ class PaymentAPI {
         Navigator.pop(context);
         return null;
       }
-        } catch (e) {
+    } catch (e) {
       print(e);
       SmartDialog.showToast(
         'Worker Not Available',
