@@ -295,7 +295,7 @@ class NotificationHelper {
     final String? payload = notificationResponse.payload;
     NotificationBody payload0;
     if (notificationResponse.payload != null) {
-      debugPrint('notification payload: $payload');
+      log('notification payload: $payload');
       payload0 = NotificationBody.fromJson(jsonDecode(payload!));
       // if (_payload.notificationType == NotificationType.order) {
       //       Get.toNamed(RouteHelper.orderDetailedView(

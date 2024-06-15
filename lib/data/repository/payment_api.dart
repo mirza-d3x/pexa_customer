@@ -56,6 +56,7 @@ class PaymentAPI {
       List? location,
       String? timeSlot,
       MainCategory? mainServiceCategory,
+      String? coupon,
       var addOns}) async {
     print('id : $categoryId \n data : $location \n time : $timeSlot');
     if (mainServiceCategory == MainCategory.QUICKHELP) {
@@ -78,6 +79,9 @@ class PaymentAPI {
           "coordinate": location,
           "timeSlot": timeSlot,
         };
+      }
+      if (coupon != null) {
+        bodyData['couponCode'] = coupon;
       }
       print(bodyData);
       return await apiClient!

@@ -3,7 +3,7 @@ description: Pexa.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 
-version: 4.0.1+72
+version: 4.0.1+73
 
 environment:
   sdk: '>=3.3.1 <4.0.0'
@@ -24,7 +24,7 @@ dependencies:
   flutter_local_notifications: ^16.3.2
   url_strategy: ^0.2.0
   pin_code_fields: ^8.0.1
-  geolocator: ^11.0.0
+  geolocator: ^12.0.0
   geocoding: ^2.0.5
   location: ^5.0.3
   google_maps_flutter: ^2.6.1
@@ -67,6 +67,7 @@ dependencies:
   in_app_update: ^4.2.2
   hive_flutter: ^1.1.0
   path_provider: ^2.1.3
+  firebase_database: ^10.5.7
  
   
 

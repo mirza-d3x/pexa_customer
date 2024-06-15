@@ -51,6 +51,7 @@ class _ServicePaymentWidgetState extends State<ServicePaymentWidget> {
   }
 
   void openCheckout() async {
+    final couponController = Get.find<CouponController>();
     String? key;
     if (Get.find<ConnectivityController>().initialDataModel != null) {
       for (var element
@@ -85,7 +86,10 @@ class _ServicePaymentWidgetState extends State<ServicePaymentWidget> {
             data: data,
             addOns: addOns,
             timeSlot: timeSlot,
-            mainServiceCategory: widget.mainServiceCategory)
+            mainServiceCategory: widget.mainServiceCategory,
+            couponCode: couponController.isApplied.isTrue
+                ? couponController.couponName.value
+                : null)
         .then((value) {
       if (value) {
         var options = {

@@ -41,6 +41,7 @@ class PaymentController extends GetxController implements GetxService {
     List? data,
     String? timeSlot,
     MainCategory? mainServiceCategory,
+    String? couponCode,
     var addOns,
   }) async {
     result.isNotEmpty ? result.clear() : result.value = [];
@@ -49,7 +50,8 @@ class PaymentController extends GetxController implements GetxService {
         location: data,
         timeSlot: timeSlot,
         addOns: addOns,
-        mainServiceCategory: mainServiceCategory);
+        mainServiceCategory: mainServiceCategory,
+        coupon: couponCode);
     if (response.statusCode == 200 || response.statusCode == 201) {
       result.add(paymentResponseModel.fromJson(response.body['resultData']));
       return true;

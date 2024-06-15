@@ -1,10 +1,12 @@
+import 'dart:developer';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:shoppe_customer/helper/route_helper.dart';
 Future<void>handleBackgroundMessages(RemoteMessage message)async{
-print("Title !!!! : ${message.notification?.title}");
-print("Body !!!! : ${message.notification?.body}");
-print("Payload !!!! : ${message.data}");
+log("Title !!!! : ${message.notification?.title}");
+log("Body !!!! : ${message.notification?.body}");
+log("Payload !!!! : ${message.data}");
 }
 class FireBaseApi{
   final _firebaseMessaging=FirebaseMessaging.instance;
@@ -41,7 +43,7 @@ class FireBaseApi{
   Future<void>initNotifications()async{
     await _firebaseMessaging.requestPermission();
     final fCMToken=await _firebaseMessaging.getToken();
-    print("Token !!!! : $fCMToken");
+    log("Token !!!! : $fCMToken");
     initPushNotification();
   }
 }

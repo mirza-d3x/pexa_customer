@@ -282,7 +282,7 @@ class RouteHelper {
     GetPage(
         name: carSpaPayment,
         page: () => getRoute(ServicePaymentWidget(
-              body: Get.arguments['body'],
+              body: Get.arguments,
               mainServiceCategory: MainCategory.CARSPA,
             ))),
     GetPage(

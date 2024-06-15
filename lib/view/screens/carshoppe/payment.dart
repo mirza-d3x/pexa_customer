@@ -75,7 +75,7 @@ class _ShoppePaymentState extends State<ShoppePayment> {
         .then((value) {
       log(coupounController.isApplied.value
           ? coupounController.finalAmount.toString()
-          : payment.result[0].amount);
+          : payment.result[0].amount.toString());
       var options = {
         'key': key,
         'amount': coupounController.isApplied.value
