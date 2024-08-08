@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flutter/src/services/predictive_back_event.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -352,5 +353,26 @@ class _NoLocationAccessScreenState extends State<NoLocationAccessScreen>
   Future<AppExitResponse> didRequestAppExit() {
     // TODO: implement didRequestAppExit
     throw UnimplementedError();
+  }
+
+  @override
+  void handleCancelBackGesture() {
+    // TODO: implement handleCancelBackGesture
+  }
+
+  @override
+  void handleCommitBackGesture() {
+    // TODO: implement handleCommitBackGesture
+  }
+
+  @override
+  bool handleStartBackGesture(PredictiveBackEvent backEvent) {
+    // TODO: implement handleStartBackGesture
+    throw UnimplementedError();
+  }
+
+  @override
+  void handleUpdateBackGestureProgress(PredictiveBackEvent backEvent) {
+    // TODO: implement handleUpdateBackGestureProgress
   }
 }

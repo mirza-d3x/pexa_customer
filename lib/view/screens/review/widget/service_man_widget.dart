@@ -14,12 +14,12 @@ class ServiceManWidget extends StatelessWidget {
   int? ratingUserCount;
   final ServiceOrderModel? orderDetails;
   ServiceManWidget(
-      {super.key, required this.workerDetails,
+      {super.key,
+      required this.workerDetails,
       this.showPhone = false,
       this.rating,
       this.ratingUserCount,
-        this.orderDetails
-      });
+      this.orderDetails});
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +80,7 @@ class ServiceManWidget extends StatelessWidget {
                               style: smallFontNew(Colors.black),
                             ),
                             Text(
-                              '${workerDetails!.branchId!.address}',
+                              '${workerDetails!.name}',
                               style: robotoRegular.copyWith(
                                   color: Theme.of(context).disabledColor,
                                   fontSize: Dimensions.fontSizeDefault),
@@ -131,25 +131,21 @@ class ServiceManWidget extends StatelessWidget {
                         children: [
                           Text(
                             orderDetails!.address!.name
-                  .toString()
-                  .toUpperCase(),
-                          overflow: TextOverflow.ellipsis,
-                          style: smallFontNew(Colors.black),
-                          maxLines: 2,
-                              ),
+                                .toString()
+                                .toUpperCase(),
+                            overflow: TextOverflow.ellipsis,
+                            style: smallFontNew(Colors.black),
+                            maxLines: 2,
+                          ),
                           Text(
-                            (orderDetails!.address!
-                                            .street !=
-                                        null
-                                    ?'${orderDetails!
-                                            .address!.street!}, '
+                            (orderDetails!.address!.street != null
+                                    ? '${orderDetails!.address!.street!}, '
                                     : '')
                                 .toString()
                                 .toUpperCase(),
                             overflow: TextOverflow.ellipsis,
                             maxLines: 2,
                             style: smallFont(Colors.black),
-
                           ),
                         ],
                       ),

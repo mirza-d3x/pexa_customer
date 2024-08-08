@@ -499,7 +499,7 @@ class ServiceOrderViewTile extends StatelessWidget {
                     height: 120,
                     width: double.maxFinite,
                     child: ServiceManWidget(
-                      orderDetails: orderDetails,
+                        orderDetails: orderDetails,
                         workerDetails: orderDetails!.workerDetails,
                         rating: orderDetails!.workerDetails!.ratings != null
                             ? orderDetails!.workerDetails!.ratings!.average
@@ -540,8 +540,9 @@ class ServiceOrderViewTile extends StatelessWidget {
                   ),
                   Container(
                     height: 25,
-                    width: 80,
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    // width: 80,
+                    // alignment: Alignment.center,
+                    padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
                     decoration: BoxDecoration(
                       color: orderDetails!.status == 'Active' ||
                               orderDetails!.status == 'Reassigned' ||
@@ -561,24 +562,25 @@ class ServiceOrderViewTile extends StatelessWidget {
                         BoxShadow(
                           color: Colors.grey.withOpacity(0.5),
                           blurRadius: 7,
-                          offset: const Offset(0, 3), // changes position of shadow
+                          offset:
+                              const Offset(0, 3), // changes position of shadow
                         ),
                       ],
                     ),
-                    child: Center(
-                      child: Text(
-                        orderDetails!.status == 'Reassigned' ||
-                                orderDetails!.status == 'Rejected'
-                            ? "Active"
-                            : orderDetails!.status == 'In_Progress'
-                                ? 'In Progress'
-                                : orderDetails!.status.toString(),
-                        style: smallFontW600(orderDetails!.status == 'Active' ||
-                                orderDetails!.status == 'Reassigned' ||
-                                orderDetails!.status == 'Rejected'
-                            ? Colors.black
-                            : Colors.white),
-                      ),
+                    child: Text(
+                      orderDetails!.status == 'Reassigned' ||
+                              orderDetails!.status == 'Rejected'
+                          ? "Active"
+                          : orderDetails!.status == 'In_Progress'
+                              ? 'In Progress'
+                              : orderDetails!.status.toString(),
+                      textAlign: TextAlign.center,
+                      
+                      style: smallFontW600(orderDetails!.status == 'Active' ||
+                              orderDetails!.status == 'Reassigned' ||
+                              orderDetails!.status == 'Rejected'
+                          ? Colors.black
+                          : Colors.white),
                     ),
                   )
                 ]),

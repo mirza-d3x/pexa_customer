@@ -14,10 +14,10 @@ class BranchDetails {
   List<String>? images;
 
   factory BranchDetails.fromJson(Map<String, dynamic> json) => BranchDetails(
-        id: json["_id"],
-        name: json["name"],
-        address: json["address"],
-        phone: json["phone"],
+        id: json["_id"] ?? "",
+        name: json["name"] ?? "",
+        address: json["address"] ?? "",
+        phone: json["phone"] ?? 0,
         images: json["images"] != null && json["images"].length > 0
             ? List<String>.from(json["images"].map((x) => x))
             : [],

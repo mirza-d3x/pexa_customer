@@ -359,7 +359,7 @@ class NotificationHelper {
             .getSingleOrderDetails(
                 orderId: notificationBody.orderDocId!,
                 serviceCategory: MainCategory.MECHANICAL)
-            .then((value) {
+            .then((value) { 
           if (value != null) {
             ServiceOrderModel serviceOrderModel =
                 Get.find<OrderController>().selectedOrderDetails!;
