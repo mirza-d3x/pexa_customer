@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flutter/src/services/predictive_back_event.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -107,7 +108,8 @@ class _NoLocationAccessScreenState extends State<NoLocationAccessScreen>
                         textAlign: TextAlign.center,
                       ),
                       // Spacer(),
-                      const SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_LARGE),
+                      const SizedBox(
+                          height: Dimensions.PADDING_SIZE_EXTRA_LARGE),
 
                       !locationEnabledController.locationEnabled.value
                           ? GetPlatform.isAndroid || GetPlatform.isIOS
@@ -127,7 +129,8 @@ class _NoLocationAccessScreenState extends State<NoLocationAccessScreen>
                                         LocationPermission.denied) {
                                       LocationPermission status =
                                           await Geolocator.requestPermission()
-                                              .onError((dynamic error, stackTrace) {
+                                              .onError(
+                                                  (dynamic error, stackTrace) {
                                         showPermissionDialog(
                                             context: context,
                                             openSettings: true,
@@ -352,5 +355,26 @@ class _NoLocationAccessScreenState extends State<NoLocationAccessScreen>
   Future<AppExitResponse> didRequestAppExit() {
     // TODO: implement didRequestAppExit
     throw UnimplementedError();
+  }
+
+  @override
+  void handleCancelBackGesture() {
+    // TODO: implement handleCancelBackGesture
+  }
+
+  @override
+  void handleCommitBackGesture() {
+    // TODO: implement handleCommitBackGesture
+  }
+
+  @override
+  bool handleStartBackGesture(PredictiveBackEvent backEvent) {
+    // TODO: implement handleStartBackGesture
+    throw UnimplementedError();
+  }
+
+  @override
+  void handleUpdateBackGestureProgress(PredictiveBackEvent backEvent) {
+    // TODO: implement handleUpdateBackGestureProgress
   }
 }

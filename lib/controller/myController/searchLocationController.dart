@@ -25,6 +25,7 @@ class SearchLocationController extends GetxController {
   final addressController = Get.find<AddressControllerFile>();
   TextEditingController searchController = TextEditingController();
   late final NearPlaces nearPlaces;
+  late final NearPlaces nearPlacess;
 
   clearRecentSearch() {
     recentSearchList.clear();
@@ -52,6 +53,43 @@ class SearchLocationController extends GetxController {
     } catch (error, stackTrace) {
       log("Error while getting User current location",
           error: error, stackTrace: stackTrace);
+    }
+  }
+
+  Future<String> getCurrentLocationName() async {
+    try {
+      Position position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.low);
+      return _getLocationNameByCor(position);
+    } catch (error, stackTrace) {
+      log("Error while getting User current location",
+          error: error, stackTrace: stackTrace);
+      return "";
+    }
+  }
+
+  Future<String> _getLocationNameByCor(Position position) async {
+    try {
+      const apiKey = "AIzaSyCcT9L1qGXL7RE-UP7qML3_U8bLRgUahyw";
+      final url = Uri.parse(
+          'https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.latitude},${position.longitude}&key=$apiKey');
+      final response = await http.get(url);
+
+      // log(" status_code: ${response.statusCode} Response: ${response.body}");
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        nearPlacess = NearPlaces.fromJson(data);
+        isLoading = RxBool(false);
+        update();
+        return data['plus_code']['compound_code'];
+      } else {
+        log(" status_code: ${response.statusCode} Response: ${response.body}");
+        return "";
+      }
+    } catch (error, stackTrace) {
+      log("Error while getting Data from Google Api",
+          error: error, stackTrace: stackTrace);
+      return "";
     }
   }
 

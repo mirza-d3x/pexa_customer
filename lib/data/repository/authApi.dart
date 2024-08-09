@@ -51,9 +51,12 @@ class AuthApi extends GetxService {
   }
 
   Future<Response> updateDetailsUser(
-      String email, String name, String userId) async {
-    return await apiClient
-        .putData(uri: '/user/$userId', body: {'email': email, 'name': name});
+      String email, String name, String userId, String location) async {
+    return await apiClient.putData(uri: '/user/$userId', body: {
+      'email': email,
+      'name': name,
+      'locationName': [location],
+    });
   }
 
   Future<Response> updateUserLocation(

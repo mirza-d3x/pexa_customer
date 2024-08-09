@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shoppe_customer/controller/myController/authFactorController.dart';
 import 'package:shoppe_customer/controller/myController/locationPermissionController.dart';
+import 'package:shoppe_customer/controller/myController/searchLocationController.dart';
 import 'package:shoppe_customer/helper/route_helper.dart';
 import 'package:shoppe_customer/util/color.dart';
 import 'package:shoppe_customer/util/new_fonts.dart';
@@ -160,14 +161,16 @@ class _UserDetailsUpdateState extends State<UserDetailsUpdate> {
                 child: Center(
                   child: Bouncing(
                     onPress: () {
+                     
                       if ((emailController.text.trim() != '') &&
                           (userNameController.text.trim() != '')) {
                         if (validateEmail(
                             emailController.text.trim().toString())) {
                           Get.find<AuthFactorsController>()
                               .updateUserDetails(
-                                  emailController.text.trim().toString(),
-                                  userNameController.text.trim().toString())
+                            emailController.text.trim().toString(),
+                            userNameController.text.trim().toString(),
+                          )
                               .then((value) {
                             // if (value) {
                             //   print("OK");
@@ -210,7 +213,8 @@ class _UserDetailsUpdateState extends State<UserDetailsUpdate> {
                       width: 150,
                       decoration: BoxDecoration(
                           color: botAppBarColor,
-                          borderRadius: const BorderRadius.all(Radius.circular(50))),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(50))),
                       child: Center(
                         child: Text(
                           widget.isEdit! ? 'Update' : 'Save',

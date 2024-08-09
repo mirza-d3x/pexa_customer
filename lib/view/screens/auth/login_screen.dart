@@ -25,7 +25,7 @@ class _NewLoginScreenState extends State<NewLoginScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-   /* phoneNumberController.text = "8129596582";*/
+    /* phoneNumberController.text = "8129596582";*/
   }
 
   @override
@@ -89,11 +89,13 @@ class _NewLoginScreenState extends State<NewLoginScreen> {
                                     ? Get.width * 0.9
                                     : Get.width * 0.3,
                                 child: TextField(
+                                  maxLength: 10,
                                   controller: phoneNumberController,
                                   textAlign: TextAlign.center,
                                   style: largeFont(Colors.black),
                                   keyboardType: TextInputType.phone,
                                   decoration: InputDecoration(
+                                      counterText: "",
                                       labelText: 'Mobile Number',
                                       labelStyle: mediumFont(Colors.black54),
                                       enabledBorder: OutlineInputBorder(
@@ -116,19 +118,20 @@ class _NewLoginScreenState extends State<NewLoginScreen> {
                                   controller.loaderHelper.cancelLoader();
                                   if (!controller.loaderHelper.isLoading) {
                                     (phoneNumberController.text.isEmpty)
-                                        ? Get.snackbar('Error', 'Please enter your phone number',
+                                        ? Get.snackbar(
+                                            'Error', 'Please enter your phone number',
                                             backgroundColor: Colors.red[700],
                                             colorText: Colors.white)
                                         : (phoneNumberController.text.length !=
                                                 10)
-                                            ? Get.snackbar('Error', 'Please enter a valid phone number',
+                                            ? Get.snackbar(
+                                                'Error', 'Please enter a valid phone number',
                                                 backgroundColor:
                                                     Colors.red[700],
                                                 colorText: Colors.white)
                                             : phoneNumberController.text
                                                     .toString()
-                                                    .contains(
-                                                        RegExp(r'[^0-9]'))
+                                                    .contains(RegExp(r'[^0-9]'))
                                                 ? Get.snackbar(
                                                     'Error', 'Please enter a valid phone number',
                                                     backgroundColor:
