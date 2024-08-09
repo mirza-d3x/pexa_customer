@@ -108,7 +108,8 @@ class _NoLocationAccessScreenState extends State<NoLocationAccessScreen>
                         textAlign: TextAlign.center,
                       ),
                       // Spacer(),
-                      const SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_LARGE),
+                      const SizedBox(
+                          height: Dimensions.PADDING_SIZE_EXTRA_LARGE),
 
                       !locationEnabledController.locationEnabled.value
                           ? GetPlatform.isAndroid || GetPlatform.isIOS
@@ -128,7 +129,8 @@ class _NoLocationAccessScreenState extends State<NoLocationAccessScreen>
                                         LocationPermission.denied) {
                                       LocationPermission status =
                                           await Geolocator.requestPermission()
-                                              .onError((dynamic error, stackTrace) {
+                                              .onError(
+                                                  (dynamic error, stackTrace) {
                                         showPermissionDialog(
                                             context: context,
                                             openSettings: true,

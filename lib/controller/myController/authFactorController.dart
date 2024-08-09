@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:shoppe_customer/controller/myController/searchLocationController.dart';
 import 'package:shoppe_customer/data/api/api_client.dart';
 import 'package:shoppe_customer/data/repository/authApi.dart';
 import 'package:shoppe_customer/controller/myController/addressController.dart';
@@ -50,15 +51,13 @@ class AuthFactorsController extends GetxController implements GetxService {
   @override
   void onInit() {
     super.onInit();
-    if(boxUser.read("isLogged")!=null){
+    if (boxUser.read("isLogged") != null) {
       isLoggedIn.value = boxUser.read("isLogged");
       token.value = boxUser.read("userToken");
-     userId.value = boxUser.read("userId");
-     phoneNumber.value = boxUser.read("phone");
+      userId.value = boxUser.read("userId");
+      phoneNumber.value = boxUser.read("phone");
     }
     //token.value = boxUser.read('userToken');
-
-  
 
     //userId.value = boxUser.read('userId');
     // print("=========== ${userId.value}");
@@ -187,7 +186,7 @@ class AuthFactorsController extends GetxController implements GetxService {
     loaderHelper.isLoading = true;
     update();
     Response response = await authApi.verifyOTP(phone: phone, otp: otp);
-print("HI iam !!!!!");
+    print("HI iam !!!!!");
     if ((response.statusCode == 200) || (response.statusCode == 201)) {
       print("Response!!! ${response.body['status']}");
       if (response.body['status'] == "OK") {
@@ -209,7 +208,8 @@ print("HI iam !!!!!");
                         savePhone(response.body['resultData']['phone'], true)));
         otpVerified(true);
         update();
-        print("vyshnavv!!!! :${Get.find<AuthFactorsController>().isLoggedIn.value}");
+        print(
+            "vyshnavv!!!! :${Get.find<AuthFactorsController>().isLoggedIn.value}");
         return response.body;
       } else {
         otpVerified(false);
@@ -240,7 +240,8 @@ print("HI iam !!!!!");
         _userPhone = userDetails!.phone;
         boxUser.write("userName", setUserName);
         boxUser.write("userPhone", _userPhone);
-        Get.find<AddressControllerFile>().setAddressList(userDetails!.addresses);
+        Get.find<AddressControllerFile>()
+            .setAddressList(userDetails!.addresses);
         if (userDetails!.email != null && userDetails!.email!.isNotEmpty) {
           _mailUpdated = true;
         }
@@ -279,7 +280,11 @@ print("HI iam !!!!!");
   }
 
   Future updateUserDetails(String email, String name) async {
-    var response = await authApi.updateDetailsUser(email, name, userDetails!.id!);
+    var response = await authApi.updateDetailsUser(
+        email,
+        name,
+        userDetails!.id!,
+        await Get.find<SearchLocationController>().getCurrentLocationName());
     if (response.body['status'] == 'OK') {
       box.write('userName', name);
       userDetails!.name = name;
@@ -294,7 +299,7 @@ print("HI iam !!!!!");
           title: 'Error', isError: true);
       return false;
     }
-    }
+  }
 
   updateUserLocation(String? locationData) async {
     var response =

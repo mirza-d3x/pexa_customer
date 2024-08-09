@@ -89,13 +89,13 @@ class _NewLoginScreenState extends State<NewLoginScreen> {
                                     ? Get.width * 0.9
                                     : Get.width * 0.3,
                                 child: TextField(
+                                  maxLength: 10,
                                   controller: phoneNumberController,
                                   textAlign: TextAlign.center,
                                   style: largeFont(Colors.black),
                                   keyboardType: TextInputType.phone,
-                                  maxLength: 10,
                                   decoration: InputDecoration(
-                                      counterText: '',
+                                      counterText: "",
                                       labelText: 'Mobile Number',
                                       labelStyle: mediumFont(Colors.black54),
                                       enabledBorder: OutlineInputBorder(
